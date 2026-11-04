@@ -4,164 +4,266 @@
 
 @section('content')
 <style>
+    /* Background Utama */
     .form-bg {
         position: relative;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: #f0f4f8;
         min-height: 100vh;
-        padding: 40px 0;
+        padding: 40px 0 60px 0;
     }
+    
+    /* Ornamen Background Abstrak */
     .form-bg::before {
         content: '';
         position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        pointer-events: none;
+        top: -100px; right: -100px;
+        width: 400px; height: 400px;
+        background: #c7d2fe;
+        border-radius: 50%;
+        opacity: 0.5;
+        filter: blur(80px);
+        z-index: 0;
+    }
+    .form-bg::after {
+        content: '';
+        position: absolute;
+        bottom: -100px; left: -100px;
+        width: 300px; height: 300px;
+        background: #fde68a;
+        border-radius: 50%;
+        opacity: 0.4;
+        filter: blur(80px);
+        z-index: 0;
     }
 
     .form-card {
-        max-width: 750px;
+        max-width: 950px;
         margin: 0 auto;
         background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.08);
         overflow: hidden;
         position: relative;
         z-index: 1;
-        border: 1px solid rgba(255,255,255,0.5);
+        border: 1px solid rgba(255,255,255,0.8);
+        display: flex;
+        flex-direction: row;
     }
 
-    .form-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* ========================================= */
+    /* SISI KIRI: INFO BUKU (CARD EKSKLUSIF)     */
+    /* ========================================= */
+    .info-buku-side {
+        flex: 0 0 40%;
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        padding: 40px 30px;
         color: white;
-        padding: 25px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         position: relative;
+        overflow: hidden;
     }
-    .form-header::after {
-        content: '📝';
-        position: absolute;
-        right: 30px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 60px;
-        opacity: 0.15;
-    }
-    .form-header h4 { font-weight: 700; margin: 0 0 5px 0; font-size: 1.4rem; }
-    .form-header p { margin: 0; opacity: 0.9; font-size: 0.9rem; }
 
-    .form-body { padding: 35px 30px; }
-    
-    /* Kartu Info Buku */
-    .buku-info {
-        background: linear-gradient(to right, #f8f9fa, #ffffff);
-        border: 1px solid #e9ecef;
-        border-left: 5px solid #667eea;
+    /* Ornamen di sisi kiri */
+    .info-buku-side::after {
+        content: '📖';
+        position: absolute;
+        bottom: -20px; right: -10px;
+        font-size: 150px;
+        opacity: 0.1;
+        transform: rotate(-15deg);
+    }
+
+    .buku-icon-large {
+        width: 100px; height: 130px;
+        background: rgba(255,255,255,0.15);
+        border: 2px solid rgba(255,255,255,0.3);
         border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 30px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 3rem;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .info-buku-side h3 {
+        font-weight: 800;
+        font-size: 1.5rem;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .info-buku-side .meta-info {
+        font-size: 0.95rem;
+        opacity: 0.9;
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
-        gap: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        gap: 8px;
+        position: relative;
+        z-index: 2;
     }
-    .buku-icon {
-        width: 70px; height: 90px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 2rem; color: white;
-        flex-shrink: 0;
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-    }
-    .buku-info h5 { margin: 0 0 8px 0; font-size: 1.2rem; font-weight: 700; color: #2d3436; }
-    .buku-info p { margin: 0 0 8px 0; font-size: 0.9rem; color: #636e72; }
+
     .status-tersedia {
         display: inline-block;
         background: #d4edda; color: #155724;
-        padding: 4px 12px; border-radius: 20px;
-        font-weight: 600; font-size: 0.8rem;
+        padding: 6px 15px; border-radius: 20px;
+        font-weight: 700; font-size: 0.85rem;
+        margin-top: 20px;
+        align-self: flex-start;
+        position: relative;
+        z-index: 2;
     }
 
-    .form-label { font-weight: 600; font-size: 0.88rem; color: #495057; margin-bottom: 8px; }
-    .form-label i { color: #667eea; }
+    /* ========================================= */
+    /* SISI KANAN: FORM PENGISIAN                */
+    /* ========================================= */
+    .form-side {
+        flex: 1;
+        padding: 40px 45px;
+    }
+
+    .form-side h4 {
+        font-weight: 800;
+        color: #1e293b;
+        margin-bottom: 5px;
+        font-size: 1.5rem;
+    }
+    .form-side p.subtitle {
+        color: #64748b;
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+    }
+
+    .form-label { font-weight: 600; font-size: 0.85rem; color: #334155; margin-bottom: 8px; }
+    .form-label i { color: #3b82f6; margin-right: 5px; }
 
     .form-control {
-        border: 2px solid #e9ecef;
-        border-radius: 10px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
         padding: 12px 15px;
         font-size: 0.95rem;
-        background: #f8f9fa;
+        background: #f8fafc;
         transition: all 0.3s ease;
     }
     .form-control:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
         background: white;
     }
+    
+    /* Desain Khusus Input yang Dikunci (Readonly) */
     .form-control[readonly] {
-        background: #e9ecef;
+        background: #e2e8f0;
         cursor: not-allowed;
         font-weight: 600;
-        color: #495057;
+        color: #475569;
+        border-color: #cbd5e1;
     }
 
     .btn-ajukan {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
         color: white; border: none;
         border-radius: 12px; padding: 15px; font-weight: 700;
-        width: 100%; font-size: 1.05rem; transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        width: 100%; font-size: 1rem; transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
     }
     .btn-ajukan:hover { 
         transform: translateY(-3px); 
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        box-shadow: 0 12px 25px rgba(59, 130, 246, 0.5);
         color: white;
     }
     
     .btn-batal {
-        background: white; color: #6c757d; border: 2px solid #e9ecef;
-        border-radius: 12px; padding: 14px; font-weight: 600;
-        width: 100%; font-size: 1rem; transition: all 0.3s ease;
+        background: white; color: #64748b; border: 2px solid #e2e8f0;
+        border-radius: 12px; padding: 12px; font-weight: 600;
+        width: 100%; font-size: 0.95rem; transition: all 0.3s ease;
         display: block; text-align: center; text-decoration: none; margin-top: 12px;
     }
-    .btn-batal:hover { background: #f8f9fa; color: #495057; border-color: #dee2e6; }
+    .btn-batal:hover { background: #f1f5f9; color: #334155; border-color: #cbd5e1; }
 
-    .form-check-input:checked { background-color: #667eea; border-color: #667eea; }
-    .form-check-label { font-size: 0.9rem; color: #495057; }
+    .form-check-input:checked { background-color: #3b82f6; border-color: #3b82f6; }
+    .form-check-label { font-size: 0.85rem; color: #64748b; }
+    .form-check-box {
+        background: #f8fafc;
+        border: 1px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 15px;
+    }
+
+    /* ========================================= */
+    /* RESPONSIVE (Tampilan HP)                  */
+    /* ========================================= */
+    @media (max-width: 768px) {
+        .form-card {
+            flex-direction: column;
+            margin: 0 15px;
+        }
+        .info-buku-side {
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .buku-icon-large {
+            margin: 0 auto 20px auto;
+            width: 80px; height: 100px;
+            font-size: 2.5rem;
+        }
+        .status-tersedia {
+            align-self: center;
+        }
+        .form-side {
+            padding: 30px 20px;
+        }
+    }
 </style>
 
 <div class="form-bg">
     <div class="container">
         <div class="form-card">
-            <div class="form-header">
-                <h4><i class="fas fa-file-signature me-2"></i> Form Pengajuan Peminjaman</h4>
-                <p>Lengkapi data di bawah untuk mengajukan peminjaman buku</p>
+            
+            <!-- ========================================= -->
+            <!-- SISI KIRI: INFO BUKU                      -->
+            <!-- ========================================= -->
+            <div class="info-buku-side">
+                <div class="buku-icon-large">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>{{ $buku->judul }}</h3>
+                <div class="meta-info">
+                    <i class="fas fa-pen-nib"></i> {{ $buku->pengarang }}
+                </div>
+                <div class="meta-info">
+                    <i class="fas fa-tag"></i> Kategori: {{ $buku->kategori }}
+                </div>
+                
+                <span class="status-tersedia">
+                    <i class="fas fa-check-circle me-1"></i> Stok Tersedia: {{ $buku->stok }}
+                </span>
             </div>
-            <div class="form-body">
+
+            <!-- ========================================= -->
+            <!-- SISI KANAN: FORMULIR                      -->
+            <!-- ========================================= -->
+            <div class="form-side">
+                <h4><i class="fas fa-file-signature me-2 text-primary"></i>Form Pengajuan</h4>
+                <p class="subtitle">Lengkapi data di bawah untuk meminjam buku ini.</p>
+
                 <form action="{{ route('peminjaman.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="buku_id" value="{{ $buku->id }}">
-                    {{-- Tanda bahwa ini pengajuan siswa --}}
                     <input type="hidden" name="is_pengajuan_siswa" value="1">
-
-                    <!-- Info Buku -->
-                    <div class="buku-info">
-                        <div class="buku-icon"><i class="fas fa-book"></i></div>
-                        <div>
-                            <h5>{{ $buku->judul }}</h5>
-                            <p><i class="fas fa-user-edit me-1"></i> {{ $buku->pengarang }} &nbsp;|&nbsp; <i class="fas fa-tag me-1"></i> {{ $buku->kategori }}</p>
-                            <span class="status-tersedia"><i class="fas fa-check-circle me-1"></i> Tersedia ({{ $buku->stok }} eksemplar)</span>
-                        </div>
-                    </div>
 
                     <!-- Data Siswa -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label"><i class="fas fa-user me-1"></i>Nama Peminjam</label>
+                            <label class="form-label"><i class="fas fa-user"></i>Nama Peminjam</label>
                             <input type="text" class="form-control" value="{{ Auth::user()->name }} (otomatis)" readonly>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label"><i class="fas fa-school me-1"></i>Kelas / NIS</label>
+                            <label class="form-label"><i class="fas fa-school"></i>Kelas / NIS</label>
                             <input type="text" class="form-control" value="{{ Auth::user()->kelas ?? '-' }} / {{ Auth::user()->nis ?? '-' }} (otomatis)" readonly>
                         </div>
                     </div>
@@ -169,23 +271,25 @@
                     <!-- Tanggal -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label"><i class="fas fa-calendar-plus me-1"></i>Tanggal Pinjam <span class="text-danger">*</span></label>
-                            <input type="date" name="tanggal_pinjam" class="form-control" value="{{ date('Y-m-d') }}" required>
+                            <label class="form-label"><i class="fas fa-calendar-plus"></i>Tanggal Pinjam</label>
+                            <input type="date" name="tanggal_pinjam" class="form-control" value="{{ date('Y-m-d') }}" readonly>
+                            <small class="text-muted" style="font-size: 0.7rem;">*Dikunci oleh sistem.</small>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label"><i class="fas fa-calendar-check me-1"></i>Tanggal Rencana Kembali <span class="text-danger">*</span></label>
-                            <input type="date" name="tanggal_kembali" class="form-control" value="{{ date('Y-m-d', strtotime('+7 days')) }}" required>
+                            <label class="form-label"><i class="fas fa-calendar-check"></i>Rencana Kembali</label>
+                            <input type="date" name="tanggal_kembali" class="form-control" value="{{ date('Y-m-d', strtotime('+7 days')) }}" readonly>
+                            <small class="text-muted" style="font-size: 0.7rem;">*Maksimal 7 hari.</small>
                         </div>
                     </div>
 
                     <!-- Catatan -->
-                    <div class="mb-4">
-                        <label class="form-label"><i class="fas fa-edit me-1"></i>Catatan (opsional)</label>
-                        <textarea name="catatan" class="form-control" rows="3" placeholder="Tulis catatan tambahan di sini (misal: untuk tugas, dll)..."></textarea>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-edit"></i>Catatan (opsional)</label>
+                        <textarea name="catatan" class="form-control" rows="2" placeholder="Tulis catatan tambahan (misal: untuk tugas)..."></textarea>
                     </div>
 
                     <!-- Persetujuan -->
-                    <div class="form-check mb-4 p-3 bg-light rounded-3 border">
+                    <div class="form-check-box mb-4">
                         <input class="form-check-input ms-0 me-2" type="checkbox" id="setuju" required>
                         <label class="form-check-label" for="setuju">
                             Saya menyetujui ketentuan peminjaman & sanksi keterlambatan yang berlaku.
@@ -194,13 +298,14 @@
 
                     <!-- Tombol -->
                     <button type="submit" class="btn-ajukan">
-                        <i class="fas fa-paper-plane me-2"></i> Ajukan Peminjaman Sekarang
+                        <i class="fas fa-paper-plane me-2"></i> Ajukan Peminjaman
                     </button>
                     <a href="{{ route('buku.index') }}" class="btn-batal">
                         Batal & Kembali ke Katalog
                     </a>
                 </form>
             </div>
+
         </div>
     </div>
 </div>

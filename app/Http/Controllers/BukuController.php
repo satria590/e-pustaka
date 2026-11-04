@@ -10,7 +10,10 @@ class BukuController extends Controller
     public function index()
     {
         $bukus = Buku::latest()->paginate(10);
-        return view('buku.index', compact('bukus'));
+        // Ambil 5 buku acak untuk Showcase (Slider)
+        $featuredBukus = Buku::inRandomOrder()->take(5)->get(); 
+        
+        return view('buku.index', compact('bukus', 'featuredBukus'));
     }
 
     public function create()
@@ -29,6 +32,8 @@ class BukuController extends Controller
             'penerbit' => 'nullable|string|max:255',
             'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
             'sinopsis' => 'nullable|string',
+            'foto' => 'nullable|url|max:500',
+            'lokasi_rak' => 'nullable|string|max:50',
         ]);
 
         Buku::create($request->all());
@@ -58,6 +63,8 @@ class BukuController extends Controller
             'penerbit' => 'nullable|string|max:255',
             'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
             'sinopsis' => 'nullable|string',
+            'foto' => 'nullable|url|max:500',
+            'lokasi_rak' => 'nullable|string|max:50',
         ]);
 
         $buku->update($request->all());
@@ -68,7 +75,6 @@ class BukuController extends Controller
 
     public function destroy(Buku $buku)
     {
-        // Cek apakah buku sedang dipinjam
         if ($buku->peminjamans()->where('status', 'dipinjam')->exists()) {
             return back()->with('error', 'Buku sedang dipinjam, tidak bisa dihapus!');
         }
@@ -88,7 +94,10 @@ class BukuController extends Controller
             ->orWhere('kategori', 'LIKE', "%{$keyword}%")
             ->orWhere('isbn', 'LIKE', "%{$keyword}%")
             ->paginate(10);
+            
+        // Ambil 5 buku acak untuk Showcase (Slider)
+        $featuredBukus = Buku::inRandomOrder()->take(5)->get();
 
-        return view('buku.index', compact('bukus', 'keyword'));
+        return view('buku.index', compact('bukus', 'keyword', 'featuredBukus'));
     }
 }

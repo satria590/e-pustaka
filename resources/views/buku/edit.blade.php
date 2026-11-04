@@ -10,7 +10,6 @@
         min-height: 100vh;
         padding: 30px 0 60px 0;
     }
-    
     .edit-bg::before {
         content: '';
         position: absolute;
@@ -25,110 +24,40 @@
         margin-bottom: 25px; position: relative; overflow: hidden;
         box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
     }
-
-    .page-header::after {
-        content: '✏️';
-        position: absolute; right: 30px; top: 50%;
-        transform: translateY(-50%); font-size: 80px; opacity: 0.15;
-    }
-
+    .page-header::after { content: '✏️'; position: absolute; right: 30px; top: 50%; transform: translateY(-50%); font-size: 80px; opacity: 0.15; }
     .page-header h4 { font-weight: 700; margin-bottom: 5px; font-size: 1.4rem; }
     .page-header p { opacity: 0.9; margin-bottom: 0; font-size: 0.95rem; }
-
-    .breadcrumb-custom {
-        display: flex; align-items: center; gap: 8px;
-        font-size: 0.85rem; opacity: 0.85; margin-top: 8px;
-    }
+    .breadcrumb-custom { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; opacity: 0.85; margin-top: 8px; }
     .breadcrumb-custom a { color: white; text-decoration: none; transition: opacity 0.2s; }
     .breadcrumb-custom a:hover { opacity: 0.7; }
 
-    .card-edit {
-        border: none; border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-        background: rgba(255,255,255,0.95);
-        backdrop-filter: blur(10px);
-        overflow: hidden; position: relative; z-index: 1; height: 100%;
-    }
-
-    .card-edit .card-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white; border-bottom: none; padding: 18px 25px;
-    }
+    .card-edit { border: none; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); overflow: hidden; position: relative; z-index: 1; height: 100%; }
+    .card-edit .card-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-bottom: none; padding: 18px 25px; }
     .card-edit .card-header h5 { font-weight: 600; margin: 0; font-size: 1.05rem; }
     .card-edit .card-body { padding: 25px; }
 
-    .info-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 16px; padding: 25px; color: white; height: 100%;
-        position: relative; overflow: hidden;
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-    }
-    .info-card::before {
-        content: ''; position: absolute; width: 200px; height: 200px;
-        border-radius: 50%; background: rgba(255,255,255,0.08);
-        top: -80px; right: -80px;
-    }
-    .info-card::after {
-        content: ''; position: absolute; width: 150px; height: 150px;
-        border-radius: 50%; background: rgba(255,255,255,0.05);
-        bottom: -60px; left: -60px;
-    }
+    .info-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 25px; color: white; height: 100%; position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); }
+    .info-card::before { content: ''; position: absolute; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.08); top: -80px; right: -80px; }
+    .info-card::after { content: ''; position: absolute; width: 150px; height: 150px; border-radius: 50%; background: rgba(255,255,255,0.05); bottom: -60px; left: -60px; }
     .info-card h5 { font-weight: 700; margin-bottom: 20px; position: relative; z-index: 1; }
-
-    .info-item {
-        display: flex; align-items: flex-start; gap: 12px;
-        margin-bottom: 18px; position: relative; z-index: 1;
-    }
-    .info-item .info-icon {
-        width: 38px; height: 38px; border-radius: 10px;
-        background: rgba(255,255,255,0.2);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1rem; flex-shrink: 0;
-    }
+    .info-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; position: relative; z-index: 1; }
+    .info-item .info-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
     .info-item .info-text h6 { margin: 0 0 3px 0; font-weight: 600; font-size: 0.9rem; }
     .info-item .info-text p { margin: 0; font-size: 0.8rem; opacity: 0.85; line-height: 1.4; }
 
     .form-label { font-weight: 500; color: #495057; font-size: 0.88rem; margin-bottom: 8px; }
     .form-label i { color: #667eea; }
-
-    .form-control, .form-select {
-        border-radius: 10px; border: 2px solid #e9ecef;
-        padding: 10px 15px; font-size: 0.92rem;
-        transition: all 0.3s ease; background-color: #f8f9fa;
-    }
-    .form-control:focus, .form-select:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-        background-color: white;
-    }
+    .form-control, .form-select { border-radius: 10px; border: 2px solid #e9ecef; padding: 10px 15px; font-size: 0.92rem; transition: all 0.3s ease; background-color: #f8f9fa; }
+    .form-control:focus, .form-select:focus { border-color: #667eea; box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25); background-color: white; }
     .form-control:hover, .form-select:hover { border-color: #c3cfe2; }
     textarea.form-control { resize: vertical; min-height: 100px; }
 
-    .btn-update {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none; border-radius: 10px; padding: 11px 28px;
-        font-weight: 500; color: white; transition: all 0.3s ease; font-size: 0.92rem;
-    }
-    .btn-update:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
-        color: white;
-    }
-    .btn-back {
-        border-radius: 10px; padding: 11px 28px; font-weight: 500;
-        transition: all 0.3s ease; font-size: 0.92rem;
-        border: 2px solid #e9ecef; background: white; color: #495057;
-    }
-    .btn-back:hover {
-        transform: translateY(-2px); background: #f8f9fa;
-        border-color: #c3cfe2; color: #495057;
-    }
+    .btn-update { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 10px; padding: 11px 28px; font-weight: 500; color: white; transition: all 0.3s ease; font-size: 0.92rem; }
+    .btn-update:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45); color: white; }
+    .btn-back { border-radius: 10px; padding: 11px 28px; font-weight: 500; transition: all 0.3s ease; font-size: 0.92rem; border: 2px solid #e9ecef; background: white; color: #495057; }
+    .btn-back:hover { transform: translateY(-2px); background: #f8f9fa; border-color: #c3cfe2; color: #495057; }
 
-    .tips-box {
-        background: #fff9e6; border-left: 4px solid #ffc107;
-        border-radius: 10px; padding: 15px 18px; margin-top: 20px;
-        font-size: 0.85rem; color: #856404;
-    }
+    .tips-box { background: #fff9e6; border-left: 4px solid #ffc107; border-radius: 10px; padding: 15px 18px; margin-top: 20px; font-size: 0.85rem; color: #856404; }
     .tips-box i { color: #ffc107; margin-right: 6px; }
 
     @media (max-width: 768px) {
@@ -139,7 +68,6 @@
 
 <div class="edit-bg">
     <div class="container">
-
         <div class="page-header">
             <h4><i class="fas fa-edit me-2"></i>Edit Buku</h4>
             <p>Perbarui informasi buku yang sudah ada di perpustakaan</p>
@@ -154,37 +82,21 @@
             <div class="col-lg-4">
                 <div class="info-card">
                     <h5><i class="fas fa-info-circle me-2"></i>Informasi Edit</h5>
-
                     <div class="info-item">
                         <div class="info-icon"><i class="fas fa-heading"></i></div>
-                        <div class="info-text">
-                            <h6>Judul Buku</h6>
-                            <p>Perbaiki judul buku jika ada kesalahan penulisan.</p>
-                        </div>
+                        <div class="info-text"><h6>Judul Buku</h6><p>Perbaiki judul buku jika ada kesalahan penulisan.</p></div>
                     </div>
-
                     <div class="info-item">
                         <div class="info-icon"><i class="fas fa-user-edit"></i></div>
-                        <div class="info-text">
-                            <h6>Pengarang & Penerbit</h6>
-                            <p>Ubah data pengarang atau penerbit jika diperlukan.</p>
-                        </div>
+                        <div class="info-text"><h6>Pengarang & Penerbit</h6><p>Ubah data pengarang atau penerbit jika diperlukan.</p></div>
                     </div>
-
                     <div class="info-item">
                         <div class="info-icon"><i class="fas fa-boxes"></i></div>
-                        <div class="info-text">
-                            <h6>Stok Buku</h6>
-                            <p>Perbarui jumlah stok sesuai kondisi terkini.</p>
-                        </div>
+                        <div class="info-text"><h6>Stok Buku</h6><p>Perbarui jumlah stok sesuai kondisi terkini.</p></div>
                     </div>
-
                     <div class="info-item">
                         <div class="info-icon"><i class="fas fa-tags"></i></div>
-                        <div class="info-text">
-                            <h6>Kategori</h6>
-                            <p>Pastikan kategori buku sudah sesuai.</p>
-                        </div>
+                        <div class="info-text"><h6>Kategori</h6><p>Pastikan kategori buku sudah sesuai.</p></div>
                     </div>
                 </div>
             </div>
@@ -201,113 +113,80 @@
                             
                             <div class="row">
                                 <div class="col-md-8 mb-4">
-                                    <label class="form-label">
-                                        <i class="fas fa-book me-1"></i>Judul Buku <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" name="judul" 
-                                           class="form-control @error('judul') is-invalid @enderror" 
-                                           value="{{ old('judul', $buku->judul) }}" 
-                                           placeholder="Judul buku" required>
-                                    @error('judul')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <label class="form-label"><i class="fas fa-book me-1"></i>Judul Buku <span class="text-danger">*</span></label>
+                                    <input type="text" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul', $buku->judul) }}" placeholder="Judul buku" required>
+                                    @error('judul')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
-
                                 <div class="col-md-4 mb-4">
-                                    <label class="form-label">
-                                        <i class="fas fa-barcode me-1"></i>ISBN <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" name="isbn" 
-                                           class="form-control @error('isbn') is-invalid @enderror" 
-                                           value="{{ old('isbn', $buku->isbn) }}" 
-                                           placeholder="978-xxx-xxx" required>
-                                    @error('isbn')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <label class="form-label"><i class="fas fa-barcode me-1"></i>ISBN <span class="text-danger">*</span></label>
+                                    <input type="text" name="isbn" class="form-control @error('isbn') is-invalid @enderror" value="{{ old('isbn', $buku->isbn) }}" placeholder="978-xxx-xxx" required>
+                                    @error('isbn')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-4">
-                                    <label class="form-label">
-                                        <i class="fas fa-user-edit me-1"></i>Pengarang <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" name="pengarang" 
-                                           class="form-control @error('pengarang') is-invalid @enderror" 
-                                           value="{{ old('pengarang', $buku->pengarang) }}" required>
-                                    @error('pengarang')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <label class="form-label"><i class="fas fa-user-edit me-1"></i>Pengarang <span class="text-danger">*</span></label>
+                                    <input type="text" name="pengarang" class="form-control @error('pengarang') is-invalid @enderror" value="{{ old('pengarang', $buku->pengarang) }}" required>
+                                    @error('pengarang')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
-
                                 <div class="col-md-6 mb-4">
-                                    <label class="form-label">
-                                        <i class="fas fa-building me-1"></i>Penerbit <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" name="penerbit" 
-                                           class="form-control @error('penerbit') is-invalid @enderror" 
-                                           value="{{ old('penerbit', $buku->penerbit) }}" required>
-                                    @error('penerbit')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <label class="form-label"><i class="fas fa-building me-1"></i>Penerbit <span class="text-danger">*</span></label>
+                                    <input type="text" name="penerbit" class="form-control @error('penerbit') is-invalid @enderror" value="{{ old('penerbit', $buku->penerbit) }}" required>
+                                    @error('penerbit')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-4 mb-4">
-                                    <label class="form-label">
-                                        <i class="fas fa-calendar me-1"></i>Tahun Terbit <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="number" name="tahun_terbit" 
-                                           class="form-control @error('tahun_terbit') is-invalid @enderror" 
-                                           value="{{ old('tahun_terbit', $buku->tahun_terbit) }}" 
-                                           min="1900" max="{{ date('Y') }}" required>
-                                    @error('tahun_terbit')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <label class="form-label"><i class="fas fa-calendar me-1"></i>Tahun Terbit <span class="text-danger">*</span></label>
+                                    <input type="number" name="tahun_terbit" class="form-control @error('tahun_terbit') is-invalid @enderror" value="{{ old('tahun_terbit', $buku->tahun_terbit) }}" min="1900" max="{{ date('Y') }}" required>
+                                    @error('tahun_terbit')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
-
                                 <div class="col-md-4 mb-4">
-                                    <label class="form-label">
-                                        <i class="fas fa-boxes me-1"></i>Stok <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="number" name="stok" 
-                                           class="form-control @error('stok') is-invalid @enderror" 
-                                           value="{{ old('stok', $buku->stok) }}" 
-                                           min="0" required>
-                                    @error('stok')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <label class="form-label"><i class="fas fa-boxes me-1"></i>Stok <span class="text-danger">*</span></label>
+                                    <input type="number" name="stok" class="form-control @error('stok') is-invalid @enderror" value="{{ old('stok', $buku->stok) }}" min="0" required>
+                                    @error('stok')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
-
                                 <div class="col-md-4 mb-4">
-                                    <label class="form-label">
-                                        <i class="fas fa-tags me-1"></i>Kategori <span class="text-danger">*</span>
-                                    </label>
+                                    <label class="form-label"><i class="fas fa-tags me-1"></i>Kategori <span class="text-danger">*</span></label>
                                     <select name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
                                         <option value="">-- Pilih Kategori --</option>
                                         @foreach(['Teknologi', 'Sains', 'Non-Fiksi', 'Fiksi', 'Sejarah', 'Lainnya'] as $kategori)
-                                            <option value="{{ $kategori }}" {{ old('kategori', $buku->kategori) == $kategori ? 'selected' : '' }}>
-                                                {{ $kategori }}
-                                            </option>
+                                            <option value="{{ $kategori }}" {{ old('kategori', $buku->kategori) == $kategori ? 'selected' : '' }}>{{ $kategori }}</option>
                                         @endforeach
                                     </select>
-                                    @error('kategori')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    @error('kategori')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                </div>
+                            </div>
+
+                            <!-- TAMBAHAN: LOKASI RAK -->
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+                                    <label class="form-label"><i class="fas fa-map-marker-alt me-1"></i>Lokasi Rak</label>
+                                    <input type="text" name="lokasi_rak" class="form-control @error('lokasi_rak') is-invalid @enderror" value="{{ old('lokasi_rak', $buku->lokasi_rak) }}" placeholder="Contoh: Rak A-01, Lantai 2">
+                                    @error('lokasi_rak')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
                             </div>
 
                             <div class="mb-4">
+                                <label class="form-label"><i class="fas fa-align-left me-1"></i>Sinopsis</label>
+                                <textarea name="sinopsis" class="form-control @error('sinopsis') is-invalid @enderror" placeholder="Sinopsis buku...">{{ old('sinopsis', $buku->sinopsis) }}</textarea>
+                                @error('sinopsis')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
+                            <!-- INPUT FOTO URL -->
+                            <div class="mb-4">
                                 <label class="form-label">
-                                    <i class="fas fa-align-left me-1"></i>Sinopsis
+                                    <i class="fas fa-link me-1"></i>Link Foto Cover (Opsional)
                                 </label>
-                                <textarea name="sinopsis" 
-                                          class="form-control @error('sinopsis') is-invalid @enderror" 
-                                          placeholder="Sinopsis buku...">{{ old('sinopsis', $buku->sinopsis) }}</textarea>
-                                @error('sinopsis')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                @if($buku->foto)
+                                    <div class="mb-2">
+                                        <img src="{{ $buku->foto }}" alt="Cover" style="height: 100px; border-radius: 8px; object-fit: cover;">
+                                    </div>
+                                @endif
+                                <input type="url" name="foto" class="form-control @error('foto') is-invalid @enderror" value="{{ old('foto', $buku->foto) }}" placeholder="Tempelkan link gambar...">
+                                @error('foto')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="tips-box">
@@ -329,7 +208,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 @endsection

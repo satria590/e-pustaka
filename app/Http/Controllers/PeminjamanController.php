@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str; // Untuk Generate Kode Pickup
 
 class PeminjamanController extends Controller
 {
@@ -23,6 +24,20 @@ class PeminjamanController extends Controller
         return view('peminjaman.index', compact('peminjamans'));
     }
 
+    public function laporan(Request $request)
+    {
+        if (Auth::user()->role !== 'admin') {
+            return back()->with('error', 'Akses ditolak.');
+        }
+        $query = Peminjaman::with(['user', 'buku'])->latest();
+        if ($request->filled('status') && $request->status !== 'all') {
+            $query->where('status', $request->status);
+        }
+        $peminjamans = $query->get();
+        $statusFilter = $request->status ?? 'all';
+        return view('peminjaman.laporan', compact('peminjamans', 'statusFilter'));
+    }
+
     public function create()
     {
         $bukus = Buku::where('stok', '>', 0)->get();
@@ -30,25 +45,22 @@ class PeminjamanController extends Controller
         return view('peminjaman.create', compact('bukus', 'users'));
     }
 
-    // TAMPILKAN FORM PENGAJUAN SISWA
     public function formAjukan($buku_id)
     {
         $buku = Buku::findOrFail($buku_id);
-        
         if ($buku->stok <= 0) {
             return redirect()->route('buku.index')->with('error', 'Maaf, stok buku ini sedang habis.');
         }
-
         return view('peminjaman.ajukan', compact('buku'));
     }
 
-    // SIMPAN DATA (Bisa dari Form Siswa atau Form Admin Offline)
     public function store(Request $request)
     {
         $request->validate([
             'buku_id' => 'required|exists:bukus,id',
             'tanggal_pinjam' => 'required|date',
             'tanggal_kembali' => 'required|date|after:tanggal_pinjam',
+            'catatan' => 'nullable|string',
         ]);
 
         $isPengajuanSiswa = $request->has('is_pengajuan_siswa');
@@ -63,23 +75,28 @@ class PeminjamanController extends Controller
 
             if ($buku->stok <= 0) {
                 DB::rollBack();
-                return back()->with('error', 'Stok buku habis! Tidak bisa memproses peminjaman.');
+                return back()->with('error', 'Stok buku habis!');
             }
 
             if ($isPengajuanSiswa) {
-                // JIKA SISWA: Status PENDING, Stok TIDAK Berkurang
+                // BUAT KODE PICKUP OTOMATIS
+                $kodePickup = 'PKP-' . strtoupper(Str::random(5));
+
                 Peminjaman::create([
                     'user_id' => Auth::id(),
                     'buku_id' => $request->buku_id,
                     'tanggal_pinjam' => $request->tanggal_pinjam,
                     'tanggal_kembali' => $request->tanggal_kembali,
                     'status' => 'pending',
+                    'kode_pickup' => $kodePickup, // <-- Simpan Kode
+                    'catatan' => $request->catatan,
                     'denda' => 0,
                 ]);
-                $pesan = 'Pengajuan berhasil! Silakan tunggu verifikasi admin.';
-                $redirect = redirect()->route('buku.index')->with('success', $pesan);
+                
+                $pesan = 'Pengajuan berhasil! Tunjukkan Kode Pickup ' . $kodePickup . ' ke Admin saat mengambil buku.';
+                $redirect = redirect()->route('peminjaman.index')->with('success', $pesan);
             } else {
-                // JIKA ADMIN OFFLINE: Status DIPINJAM, Stok Berkurang
+                // Admin Offline
                 $buku->decrement('stok');
                 Peminjaman::create([
                     'user_id' => $request->user_id,
@@ -105,7 +122,7 @@ class PeminjamanController extends Controller
     public function show(Peminjaman $peminjaman)
     {
         if (Auth::user()->role !== 'admin' && $peminjaman->user_id !== Auth::id()) {
-            return back()->with('error', 'Anda tidak memiliki akses ke data ini.');
+            return back()->with('error', 'Akses ditolak.');
         }
         return view('peminjaman.show', compact('peminjaman'));
     }
@@ -113,7 +130,7 @@ class PeminjamanController extends Controller
     public function edit(Peminjaman $peminjaman)
     {
         if (Auth::user()->role !== 'admin') {
-            return back()->with('error', 'Akses ditolak. Hanya admin yang dapat mengubah data.');
+            return back()->with('error', 'Akses ditolak.');
         }
         $bukus = Buku::all();
         $users = User::all();
@@ -194,7 +211,7 @@ class PeminjamanController extends Controller
 
             if ($buku->stok <= 0) {
                 DB::rollBack();
-                return back()->with('error', 'GAGAL VERIFIKASI! Stok buku sudah habis (mungkin baru saja dipinjam offline). Silakan TOLAK pengajuan ini.');
+                return back()->with('error', 'GAGAL VERIFIKASI! Stok buku sudah habis.');
             }
 
             $buku->decrement('stok');

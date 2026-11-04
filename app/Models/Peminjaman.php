@@ -20,7 +20,8 @@ class Peminjaman extends Model
         'tanggal_pengembalian_aktual',
         'status', 
         'denda',
-        // 'alasan_tolak' // (Uncomment jika Anda menambah kolom ini di database)
+        'catatan',
+        'kode_pickup' // <-- TAMBAHAN
     ];
 
     protected $casts = [
@@ -39,12 +40,6 @@ class Peminjaman extends Model
         return $this->belongsTo(Buku::class);
     }
 
-    // Relasi ke tabel denda (jika ada)
-    public function dendaRelation()
-    {
-        return $this->hasOne(Denda::class);
-    }
-
     public function isTerlambat()
     {
         if (in_array($this->status, ['dikembalikan', 'ditolak', 'pending'])) {
@@ -53,23 +48,18 @@ class Peminjaman extends Model
         return Carbon::now()->gt($this->tanggal_kembali);
     }
 
-    public function hitungDenda()
+    public function hitungDendaBerjalan()
     {
-        if ($this->tanggal_pengembalian_aktual) {
-            $tanggalKembali = $this->tanggal_pengembalian_aktual;
-        } else {
-            $tanggalKembali = Carbon::now();
+        if (in_array($this->status, ['dikembalikan', 'terlambat', 'ditolak', 'pending'])) {
+            return $this->denda;
         }
 
-        if ($tanggalKembali->gt($this->tanggal_kembali)) {
-            // Gunakan diffInDays dengan parameter false agar hasilnya positif
-            $hariTelat = $tanggalKembali->diffInDays($this->tanggal_kembali, false); 
-            // Note: cek logika diffInDays Anda, jika minus dibalik
-            if ($hariTelat < 0) {
-                $hariTelat = abs($hariTelat);
-                return $hariTelat * 2000;
-            }
+        $hariIni = Carbon::now();
+        if ($hariIni->gt($this->tanggal_kembali)) {
+            $hariTelat = $hariIni->diffInDays($this->tanggal_kembali);
+            return $hariTelat * 2000;
         }
+
         return 0;
     }
 }

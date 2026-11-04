@@ -12,8 +12,16 @@ class Buku extends Model
     protected $table = 'bukus';
 
     protected $fillable = [
-        'judul', 'pengarang', 'kategori', 'isbn',
-        'stok', 'penerbit', 'tahun_terbit', 'sinopsis'
+        'judul', 
+        'pengarang', 
+        'kategori', 
+        'isbn',
+        'stok', 
+        'penerbit', 
+        'tahun_terbit', 
+        'sinopsis',
+        'foto',
+        'lokasi_rak' // <-- Tambahan Lokasi Rak
     ];
 
     public function peminjamans()

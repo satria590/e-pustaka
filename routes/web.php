@@ -13,10 +13,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 // ==================== ROUTE PUBLIC (TANPA LOGIN) ====================
-Route::get('/', [BukuController::class, 'index'])->name('home');
+
+// Halaman Utama (Landing Page)
+Route::get('/', function () {
+    // Mengambil 4 buku terbaru untuk ditampilkan di halaman depan
+    $bukus = \App\Models\Buku::latest()->take(4)->get();
+    return view('welcome', compact('bukus'));
+})->name('home');
+
+// Halaman Katalog
 Route::get('/katalog', [BukuController::class, 'index'])->name('katalog');
 Route::get('/katalog/search', [BukuController::class, 'search'])->name('katalog.search');
 Route::get('/katalog/{buku}', [BukuController::class, 'show'])->name('katalog.show');
+
 
 // ==================== ROUTE PRIVATE (HARUS LOGIN) ====================
 Route::middleware(['auth'])->group(function () {
@@ -32,7 +41,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('buku', BukuController::class);
     Route::get('/buku/search', [BukuController::class, 'search'])->name('buku.search');
 
-    // Manajemen Peminjaman
+    // ==========================================
+    // MANAJEMEN PEMINJAMAN
+    // ==========================================
+    
+    // PENTING: Rute Laporan harus diletakkan DI ATAS Route::resource
+    // Agar tidak dianggap sebagai ID peminjaman oleh Laravel
+    Route::get('/peminjaman/laporan', [PeminjamanController::class, 'laporan'])->name('peminjaman.laporan');
+    
+    // Route Resource (Otomatis membuat index, create, store, show, edit, update, destroy)
     Route::resource('peminjaman', PeminjamanController::class);
     
     // Route Tambahan Peminjaman
@@ -45,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/peminjaman/verifikasi/{id}', [PeminjamanController::class, 'verifikasi'])->name('peminjaman.verifikasi');
     Route::get('/peminjaman/tolak/{id}', [PeminjamanController::class, 'tolak'])->name('peminjaman.tolak');
     
-    // Laporan (opsional)
+    // Laporan Dashboard (opsional)
     Route::get('/laporan', [DashboardController::class, 'laporan'])->name('laporan');
 });
 
