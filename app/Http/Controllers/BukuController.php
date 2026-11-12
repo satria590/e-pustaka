@@ -89,15 +89,18 @@ class BukuController extends Controller
     {
         $keyword = $request->keyword;
 
+        // Cari buku berdasarkan keyword
         $bukus = Buku::where('judul', 'LIKE', "%{$keyword}%")
             ->orWhere('pengarang', 'LIKE', "%{$keyword}%")
             ->orWhere('kategori', 'LIKE', "%{$keyword}%")
             ->orWhere('isbn', 'LIKE', "%{$keyword}%")
             ->paginate(10);
             
-        // Ambil 5 buku acak untuk Showcase (Slider)
-        $featuredBukus = Buku::inRandomOrder()->take(5)->get();
+        // Tetap sediakan data Slider (atau kosongkan jika sedang mencari)
+        // Saya kosongkan agar slider tidak muncul saat mencari (lebih fokus ke hasil)
+        $featuredBukus = collect(); 
 
+        // PENTING: Harus mengembalikan ke view 'buku.index' agar desainnya tetap sama
         return view('buku.index', compact('bukus', 'keyword', 'featuredBukus'));
     }
 }

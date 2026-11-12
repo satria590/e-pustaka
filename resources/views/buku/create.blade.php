@@ -6,63 +6,56 @@
 <style>
     .create-bg {
         position: relative;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
         min-height: 100vh;
         padding: 30px 0 60px 0;
     }
-    .create-bg::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        pointer-events: none;
-    }
-
+    
     .page-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 16px; padding: 25px 30px; color: white;
-        margin-bottom: 25px; position: relative; overflow: hidden;
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        border-radius: 20px; padding: 30px 40px; color: white;
+        margin-bottom: 30px; position: relative; overflow: hidden;
+        box-shadow: 0 10px 30px rgba(30, 58, 138, 0.25);
     }
-    .page-header::after { content: '📖'; position: absolute; right: 30px; top: 50%; transform: translateY(-50%); font-size: 80px; opacity: 0.15; }
-    .page-header h4 { font-weight: 700; margin-bottom: 5px; font-size: 1.4rem; }
-    .page-header p { opacity: 0.9; margin-bottom: 0; font-size: 0.95rem; }
-    .breadcrumb-custom { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; opacity: 0.85; margin-top: 8px; }
-    .breadcrumb-custom a { color: white; text-decoration: none; transition: opacity 0.2s; }
+    .page-header::after { content: '📖'; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); font-size: 100px; opacity: 0.15; }
+    .page-header h4 { font-weight: 800; margin-bottom: 5px; font-size: 1.6rem; }
+    .page-header p { opacity: 0.9; margin-bottom: 0; font-size: 1rem; }
+    .breadcrumb-custom { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; opacity: 0.85; margin-top: 10px; }
+    .breadcrumb-custom a { color: white; text-decoration: none; transition: opacity 0.2s; font-weight: 500; }
     .breadcrumb-custom a:hover { opacity: 0.7; }
 
-    .card-create { border: none; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); overflow: hidden; position: relative; z-index: 1; height: 100%; }
-    .card-create .card-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-bottom: none; padding: 18px 25px; }
-    .card-create .card-header h5 { font-weight: 600; margin: 0; font-size: 1.05rem; }
-    .card-create .card-body { padding: 25px; }
+    .card-create { border: none; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: white; overflow: hidden; position: relative; z-index: 1; height: 100%; }
+    .card-create .card-header { background: #f8fafc; border-bottom: 2px solid #e2e8f0; padding: 20px 25px; }
+    .card-create .card-header h5 { font-weight: 800; color: #1e3a8a; margin: 0; font-size: 1.1rem; }
+    .card-create .card-body { padding: 30px; }
 
-    .info-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 25px; color: white; height: 100%; position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); }
+    .info-card { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 20px; padding: 30px; color: white; height: 100%; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(30, 58, 138, 0.25); }
     .info-card::before { content: ''; position: absolute; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.08); top: -80px; right: -80px; }
-    .info-card::after { content: ''; position: absolute; width: 150px; height: 150px; border-radius: 50%; background: rgba(255,255,255,0.05); bottom: -60px; left: -60px; }
-    .info-card h5 { font-weight: 700; margin-bottom: 20px; position: relative; z-index: 1; }
-    .info-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; position: relative; z-index: 1; }
-    .info-item .info-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-    .info-item .info-text h6 { margin: 0 0 3px 0; font-weight: 600; font-size: 0.9rem; }
-    .info-item .info-text p { margin: 0; font-size: 0.8rem; opacity: 0.85; line-height: 1.4; }
+    .info-card h5 { font-weight: 800; margin-bottom: 25px; position: relative; z-index: 1; font-size: 1.2rem; }
+    .info-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; position: relative; z-index: 1; }
+    .info-item .info-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .info-item .info-text h6 { margin: 0 0 4px 0; font-weight: 700; font-size: 0.95rem; }
+    .info-item .info-text p { margin: 0; font-size: 0.85rem; opacity: 0.85; line-height: 1.4; }
 
-    .form-label { font-weight: 500; color: #495057; font-size: 0.88rem; margin-bottom: 8px; }
-    .form-label i { color: #667eea; }
-    .form-control, .form-select { border-radius: 10px; border: 2px solid #e9ecef; padding: 10px 15px; font-size: 0.92rem; transition: all 0.3s ease; background-color: #f8f9fa; }
-    .form-control:focus, .form-select:focus { border-color: #667eea; box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25); background-color: white; }
-    .form-control:hover, .form-select:hover { border-color: #c3cfe2; }
-    textarea.form-control { resize: vertical; min-height: 100px; }
+    .form-label { font-weight: 600; color: #334155; font-size: 0.9rem; margin-bottom: 8px; }
+    .form-label i { color: #3b82f6; }
+    .form-control, .form-select { border-radius: 12px; border: 2px solid #e2e8f0; padding: 12px 15px; font-size: 0.95rem; transition: all 0.3s ease; background-color: #f8fafc; }
+    .form-control:focus, .form-select:focus { border-color: #3b82f6; box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.15); background-color: white; }
+    .form-control:hover, .form-select:hover { border-color: #cbd5e1; }
+    textarea.form-control { resize: vertical; min-height: 120px; }
 
-    .btn-save { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 10px; padding: 11px 28px; font-weight: 500; color: white; transition: all 0.3s ease; font-size: 0.92rem; }
-    .btn-save:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45); color: white; }
-    .btn-back { border-radius: 10px; padding: 11px 28px; font-weight: 500; transition: all 0.3s ease; font-size: 0.92rem; border: 2px solid #e9ecef; background: white; color: #495057; }
-    .btn-back:hover { transform: translateY(-2px); background: #f8f9fa; border-color: #c3cfe2; color: #495057; }
+    .btn-save { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none; border-radius: 12px; padding: 12px 30px; font-weight: 700; color: white; transition: all 0.3s ease; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3); }
+    .btn-save:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4); color: white; }
+    .btn-back { border-radius: 12px; padding: 12px 30px; font-weight: 600; transition: all 0.3s ease; font-size: 0.95rem; border: 2px solid #e2e8f0; background: white; color: #475569; }
+    .btn-back:hover { transform: translateY(-3px); background: #f8fafc; border-color: #cbd5e1; color: #1e293b; }
 
-    .tips-box { background: #fff9e6; border-left: 4px solid #ffc107; border-radius: 10px; padding: 15px 18px; margin-top: 20px; font-size: 0.85rem; color: #856404; }
-    .tips-box i { color: #ffc107; margin-right: 6px; }
+    .tips-box { background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 12px; padding: 15px 20px; margin-top: 25px; font-size: 0.9rem; color: #92400e; }
+    .tips-box i { color: #f59e0b; margin-right: 8px; }
 
     @media (max-width: 768px) {
         .page-header::after { display: none; }
         .info-card { margin-bottom: 20px; }
+        .card-create .card-body { padding: 20px; }
     }
 </style>
 
@@ -162,7 +155,7 @@
                                 </div>
                             </div>
 
-                            <!-- TAMBAHAN: LOKASI RAK -->
+                            <!-- LOKASI RAK -->
                             <div class="row">
                                 <div class="col-md-12 mb-4">
                                     <label class="form-label"><i class="fas fa-map-marker-alt me-1"></i>Lokasi Rak</label>
@@ -178,11 +171,9 @@
                                 @error('sinopsis')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
-                            <!-- INPUT FOTO URL -->
+                            <!-- FOTO URL -->
                             <div class="mb-4">
-                                <label class="form-label">
-                                    <i class="fas fa-link me-1"></i>Link Foto Cover (Opsional)
-                                </label>
+                                <label class="form-label"><i class="fas fa-link me-1"></i>Link Foto Cover (Opsional)</label>
                                 <input type="url" name="foto" class="form-control @error('foto') is-invalid @enderror" value="{{ old('foto') }}" placeholder="Contoh: https://images.unsplash.com/photo-1544947950-fa07a98d237f">
                                 <small class="text-muted">Tempelkan link gambar dari internet (Google/Pinterest).</small>
                                 @error('foto')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -190,16 +181,15 @@
 
                             <div class="tips-box">
                                 <i class="fas fa-lightbulb"></i>
-                                <strong>Catatan:</strong> Pastikan ISBN unik dan tidak duplikat. 
-                                Stok akan otomatis bertambah jika buku ini sudah ada sebelumnya.
+                                <strong>Catatan:</strong> Pastikan ISBN unik dan tidak duplikat. Stok akan otomatis bertambah jika buku ini sudah ada sebelumnya.
                             </div>
                             
-                            <div class="d-flex gap-2 mt-4">
+                            <div class="d-flex gap-3 mt-4">
                                 <button type="submit" class="btn btn-save">
-                                    <i class="fas fa-save me-1"></i>Simpan Buku
+                                    <i class="fas fa-save me-2"></i>Simpan Buku
                                 </button>
                                 <a href="{{ route('buku.index') }}" class="btn btn-back">
-                                    <i class="fas fa-arrow-left me-1"></i>Kembali
+                                    <i class="fas fa-arrow-left me-2"></i>Kembali
                                 </a>
                             </div>
                         </form>

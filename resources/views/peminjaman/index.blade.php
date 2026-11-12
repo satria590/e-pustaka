@@ -3,71 +3,78 @@
 @section('title', 'Data Peminjaman')
 
 @section('content')
+@php
+    // Cek apakah yang login adalah Siswa
+    $isSiswa = Auth::user()->role == 'siswa';
+    
+    // Tentukan warna Header
+    $headerBg = $isSiswa 
+        ? 'linear-gradient(135deg, #059669 0%, #10b981 100%)' // Hijau untuk Siswa
+        : 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)'; // Biru untuk Admin
+        
+    // Tentukan warna Filter Aktif & Tombol
+    $primaryColor = $isSiswa ? '#10b981' : '#1e3a8a';
+@endphp
+
 <style>
-    .peminjaman-bg {
-        position: relative;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        min-height: 100vh;
-        padding: 30px 0 60px 0;
-    }
-    .peminjaman-bg::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        pointer-events: none;
-    }
+    .peminjaman-bg { position: relative; background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); min-height: 100vh; padding: 30px 0 60px 0; }
     .container-wide { width: 95%; max-width: 1500px; margin: 0 auto; position: relative; z-index: 1; }
     
     .header-peminjaman {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: {{ $headerBg }};
         border-radius: 20px; padding: 30px 40px; color: white;
         margin-bottom: 25px; position: relative; overflow: hidden;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.25);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
     .header-peminjaman::after { content: '📋'; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); font-size: 90px; opacity: 0.15; }
-    .header-peminjaman h4 { font-weight: 700; margin-bottom: 8px; font-size: 1.6rem; }
+    .header-peminjaman h4 { font-weight: 800; margin-bottom: 8px; font-size: 1.6rem; }
     .header-peminjaman p { opacity: 0.9; margin-bottom: 0; font-size: 1rem; }
     
     .stat-mini { display: inline-block; padding: 8px 18px; border-radius: 20px; background: rgba(255,255,255,0.15); margin-right: 10px; font-size: 0.9rem; backdrop-filter: blur(5px); }
     
-    .card-peminjaman { border: none; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: rgba(255,255,255,0.98); overflow: hidden; }
-    .card-peminjaman .card-header { background: white; border-bottom: 2px solid #f1f3f5; padding: 20px 25px; }
+    .card-peminjaman { border: none; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: white; overflow: hidden; }
+    .card-peminjaman .card-header { background: white; border-bottom: 2px solid #f1f5f9; padding: 20px 25px; }
     
     .table-peminjaman { margin-bottom: 0; }
-    .table-peminjaman thead th { background: #f8f9fa; border-bottom: 2px solid #e9ecef; color: #495057; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; padding: 15px 20px; letter-spacing: 0.5px; white-space: nowrap; }
-    .table-peminjaman tbody td { padding: 15px 20px; vertical-align: middle; border-bottom: 1px solid #f1f3f5; }
+    .table-peminjaman thead th { background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; padding: 15px 20px; letter-spacing: 0.5px; white-space: nowrap; }
+    .table-peminjaman tbody td { padding: 15px 20px; vertical-align: middle; border-bottom: 1px solid #f1f5f9; }
     .table-peminjaman tbody tr { transition: all 0.2s ease; }
-    .table-peminjaman tbody tr:hover { background: #f8f9fa; }
+    .table-peminjaman tbody tr:hover { background: #f8fafc; }
+    
+    /* Baris Tabel Terlambat */
+    .row-terlambat { background-color: #fef2f2 !important; }
+    .row-terlambat:hover { background-color: #fee2e2 !important; }
     
     .td-peminjam { max-width: 180px; }
     .td-buku { max-width: 200px; }
     .text-truncate-custom { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
     
-    .badge-status { padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-    .badge-pending { background: #cce5ff; color: #004085; }
-    .badge-dipinjam { background: #fff3cd; color: #856404; }
-    .badge-dikembalikan { background: #d4edda; color: #155724; }
-    .badge-terlambat { background: #f8d7da; color: #721c24; }
-    .badge-ditolak { background: #e2e3e5; color: #383d41; }
-    .badge-denda { background: #dc3545; color: white; padding: 5px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; white-space: nowrap; }
+    .badge-status { padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+    .badge-pending { background: #e0e7ff; color: #3730a3; }
+    .badge-dipinjam { background: #fef3c7; color: #92400e; }
+    .badge-dikembalikan { background: #d1fae5; color: #065f46; }
+    .badge-terlambat { background: #fee2e2; color: #991b1b; }
+    .badge-ditolak { background: #e2e8f0; color: #475569; }
+    .badge-denda { background: #dc3545; color: white; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; white-space: nowrap; }
     
-    .btn-action-sm { border-radius: 8px; padding: 6px 10px; font-size: 0.75rem; font-weight: 600; transition: all 0.3s ease; }
-    .btn-action-sm:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .btn-action-sm { border-radius: 8px; padding: 6px 10px; font-size: 0.75rem; font-weight: 700; transition: all 0.3s ease; }
+    .btn-action-sm:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
     
     .avatar-user { width: 35px; height: 35px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem; margin-right: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); flex-shrink: 0; }
     
     .filter-section { display: flex; gap: 8px; flex-wrap: wrap; }
-    .filter-section .btn-filter { border-radius: 20px; padding: 6px 16px; font-size: 0.8rem; font-weight: 600; border: 2px solid #e9ecef; background: white; color: #6c757d; transition: all 0.3s ease; }
-    .filter-section .btn-filter:hover, .filter-section .btn-filter.active { border-color: #667eea; background: #667eea; color: white; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3); }
+    .filter-section .btn-filter { border-radius: 20px; padding: 6px 16px; font-size: 0.8rem; font-weight: 700; border: 2px solid #e2e8f0; background: white; color: #64748b; transition: all 0.3s ease; }
+    .filter-section .btn-filter:hover, .filter-section .btn-filter.active { border-color: {{ $primaryColor }}; background: {{ $primaryColor }}; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
     
     .empty-state { text-align: center; padding: 60px 20px; }
-    .empty-state .empty-icon { font-size: 80px; color: #b2bec3; margin-bottom: 20px; }
+    .empty-state .empty-icon { font-size: 80px; color: #cbd5e1; margin-bottom: 20px; }
 
     .mobile-card-container { display: none; }
-    .mobile-card { background: white; border: 1px solid #e9ecef; border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); position: relative; }
-    .mobile-card-header { display: flex; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #e9ecef; }
-    .mobile-card-body p { margin-bottom: 5px; font-size: 0.85rem; color: #495057; }
+    .mobile-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); position: relative; border-left: 5px solid {{ $primaryColor }}; }
+    .mobile-card-terlambat { border-left-color: #ef4444; background: #fef2f2; }
+    
+    .mobile-card-header { display: flex; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #e2e8f0; }
+    .mobile-card-body p { margin-bottom: 5px; font-size: 0.85rem; color: #475569; }
     .mobile-card-body p strong { color: #1e293b; }
     .mobile-card-actions { margin-top: 15px; display: flex; gap: 5px; flex-wrap: wrap; }
     .mobile-card-actions .btn { flex: 1; font-size: 0.8rem; padding: 8px; }
@@ -110,14 +117,17 @@
 
         <div class="header-peminjaman">
             <div>
-                <h4><i class="fas fa-hand-holding me-2"></i>Data Peminjaman</h4>
-                <p><i class="fas fa-clock me-2"></i>Kelola semua transaksi peminjaman buku</p>
+                <h4><i class="fas fa-hand-holding me-2"></i>{{ $isSiswa ? 'Riwayat Peminjaman Saya' : 'Data Peminjaman' }}</h4>
+                <p><i class="fas fa-clock me-2"></i>{{ $isSiswa ? 'Pantau status pinjaman dan denda Anda' : 'Kelola semua transaksi peminjaman buku' }}</p>
+                
+                @if(!$isSiswa)
                 <div class="mt-3">
                     <span class="stat-mini"><i class="fas fa-book me-1"></i>Total: {{ $peminjamans->total() }}</span>
                     <span class="stat-mini"><i class="fas fa-hourglass-half me-1"></i>Pending: {{ $peminjamans->where('status', 'pending')->count() }}</span>
                     <span class="stat-mini"><i class="fas fa-spinner me-1"></i>Dipinjam: {{ $peminjamans->where('status', 'dipinjam')->count() }}</span>
                     <span class="stat-mini"><i class="fas fa-check-circle me-1"></i>Selesai: {{ $peminjamans->where('status', 'dikembalikan')->count() }}</span>
                 </div>
+                @endif
             </div>
         </div>
         
@@ -132,12 +142,12 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-12 text-lg-end text-center mt-3 mt-lg-0">
-                @if(Auth::user()->role == 'admin')
+                @if(!$isSiswa)
                     <div class="d-flex gap-2 justify-content-lg-end justify-content-center">
                         <button onclick="window.print()" class="btn btn-secondary px-3 py-2" style="border-radius: 10px; font-weight: 600; box-shadow: 0 4px 10px rgba(108, 117, 125, 0.3);">
                             <i class="fas fa-print me-1"></i> Cetak
                         </button>
-                        <a href="{{ route('peminjaman.create') }}" class="btn btn-primary px-4 py-2" style="border-radius: 10px; font-weight: 600; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);">
+                        <a href="{{ route('peminjaman.create') }}" class="btn btn-primary px-4 py-2" style="border-radius: 10px; font-weight: 600; box-shadow: 0 4px 10px rgba(30, 58, 138, 0.3); background: #1e3a8a; border-color: #1e3a8a;">
                             <i class="fas fa-plus me-1"></i>Tambah
                         </a>
                     </div>
@@ -147,7 +157,7 @@
         
         <div class="card-peminjaman card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span class="fw-bold fs-5"><i class="fas fa-table me-2 text-primary"></i>Daftar Peminjaman</span>
+                <span class="fw-bold fs-5" style="color: {{ $primaryColor }};"><i class="fas fa-table me-2"></i>Daftar Peminjaman</span>
                 <span class="text-muted" style="font-size: 0.85rem;"><i class="fas fa-arrow-up me-1"></i>Data Terbaru</span>
             </div>
             <div class="card-body p-0">
@@ -168,11 +178,16 @@
                         </thead>
                         <tbody>
                             @forelse($peminjamans as $key => $peminjaman)
-                            <tr data-status="{{ $peminjaman->status }}">
+                            @php
+                                // CEK KETERLAMBATAN REAL-TIME
+                                $dendaSaatIni = $peminjaman->hitungDendaBerjalan();
+                                $isTerlambat = ($peminjaman->status == 'dipinjam' && \Carbon\Carbon::now()->gt($peminjaman->tanggal_kembali));
+                            @endphp
+                            <tr data-status="{{ $peminjaman->status }}" class="{{ $isTerlambat ? 'row-terlambat' : '' }}">
                                 <td><span class="fw-bold text-muted">{{ $peminjamans->firstItem() + $key }}</span></td>
                                 <td class="td-peminjam">
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar-user" style="background: {{ ['#667eea', '#11998e', '#f093fb', '#4facfe', '#f5576c', '#ffd93d'][$key % 6] }};">
+                                        <div class="avatar-user" style="background: {{ ['#1e3a8a', '#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'][$key % 6] }};">
                                             {{ strtoupper(substr($peminjaman->user->name, 0, 1)) }}
                                         </div>
                                         <div style="min-width: 0;">
@@ -200,14 +215,12 @@
                                     </div>
                                 </td>
                                 <td>
-                                    @if($peminjaman->status == 'pending')
+                                    @if($isTerlambat)
+                                        <span class="badge-status badge-terlambat"><i class="fas fa-exclamation-triangle"></i>Terlambat!</span>
+                                    @elseif($peminjaman->status == 'pending')
                                         <span class="badge-status badge-pending"><i class="fas fa-hourglass-half"></i>Menunggu</span>
-                                        {{-- TAMPILKAN KODE PICKUP --}}
                                         @if($peminjaman->kode_pickup)
-                                            <br>
-                                            <small class="text-primary fw-bold" style="font-size: 0.75rem;">
-                                                <i class="fas fa-key me-1"></i>{{ $peminjaman->kode_pickup }}
-                                            </small>
+                                            <br><small class="text-primary fw-bold" style="font-size: 0.7rem;"><i class="fas fa-key me-1"></i>{{ $peminjaman->kode_pickup }}</small>
                                         @endif
                                     @elseif($peminjaman->status == 'dipinjam')
                                         <span class="badge-status badge-dipinjam"><i class="fas fa-spinner fa-spin"></i>Dipinjam</span>
@@ -220,10 +233,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @php $dendaSaatIni = $peminjaman->hitungDendaBerjalan(); @endphp
                                     @if($dendaSaatIni > 0)
                                         <span class="badge-denda"><i class="fas fa-money-bill-wave me-1"></i>Rp {{ number_format($dendaSaatIni, 0, ',', '.') }}</span>
-                                        @if($peminjaman->status == 'dipinjam')
+                                        @if($peminjaman->status == 'dipinjam' || $isTerlambat)
                                             <br><small class="text-danger" style="font-size: 0.65rem;"><i class="fas fa-arrow-up"></i> Berjalan</small>
                                         @endif
                                     @else
@@ -233,14 +245,14 @@
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-1 flex-wrap">
                                         @if($peminjaman->status == 'pending')
-                                            @if(Auth::user()->role == 'admin')
+                                            @if(!$isSiswa)
                                                 <a href="{{ route('peminjaman.verifikasi', $peminjaman->id) }}" class="btn btn-success btn-action-sm" onclick="return confirm('Verifikasi peminjaman ini?')"><i class="fas fa-check"></i></a>
                                                 <a href="{{ route('peminjaman.tolak', $peminjaman->id) }}" class="btn btn-danger btn-action-sm" onclick="return confirm('Yakin tolak pengajuan ini?')"><i class="fas fa-times"></i></a>
                                             @else
                                                 <span class="text-muted" style="font-size: 0.75rem;"><i class="fas fa-clock me-1"></i>Menunggu</span>
                                             @endif
-                                        @elseif($peminjaman->status == 'dipinjam' || $peminjaman->status == 'terlambat')
-                                            @if(Auth::user()->role == 'admin')
+                                        @elseif($peminjaman->status == 'dipinjam' || $peminjaman->status == 'terlambat' || $isTerlambat)
+                                            @if(!$isSiswa)
                                                 <a href="{{ route('peminjaman.kembali', $peminjaman->id) }}" class="btn btn-success btn-action-sm" onclick="return confirm('Yakin buku sudah dikembalikan?')"><i class="fas fa-undo"></i></a>
                                                 <a href="{{ route('peminjaman.edit', $peminjaman->id) }}" class="btn btn-warning btn-action-sm"><i class="fas fa-edit"></i></a>
                                                 <form action="{{ route('peminjaman.destroy', $peminjaman->id) }}" method="POST" class="d-inline">
@@ -262,9 +274,14 @@
                                     <div class="empty-state">
                                         <div class="empty-icon"><i class="fas fa-inbox"></i></div>
                                         <h4 class="text-muted fw-bold">Belum ada data peminjaman</h4>
-                                        @if(Auth::user()->role == 'admin')
-                                            <a href="{{ route('peminjaman.create') }}" class="btn btn-primary mt-3 px-4 py-2" style="border-radius: 10px;">
+                                        @if(!$isSiswa)
+                                            <a href="{{ route('peminjaman.create') }}" class="btn btn-primary mt-3 px-4 py-2" style="border-radius: 10px; background: #1e3a8a; border-color: #1e3a8a;">
                                                 <i class="fas fa-plus me-1"></i>Tambah Peminjaman
+                                            </a>
+                                        @else
+                                            <p class="text-muted">Anda belum pernah meminjam buku.</p>
+                                            <a href="{{ route('buku.index') }}" class="btn btn-success mt-3 px-4 py-2" style="border-radius: 10px;">
+                                                <i class="fas fa-search me-1"></i>Cari Buku
                                             </a>
                                         @endif
                                     </div>
@@ -277,19 +294,23 @@
 
                 <div class="mobile-card-container p-3">
                     @forelse($peminjamans as $key => $peminjaman)
-                    <div class="mobile-card" data-status="{{ $peminjaman->status }}">
+                    @php
+                        $dendaSaatIni = $peminjaman->hitungDendaBerjalan();
+                        $isTerlambat = ($peminjaman->status == 'dipinjam' && \Carbon\Carbon::now()->gt($peminjaman->tanggal_kembali));
+                    @endphp
+                    <div class="mobile-card {{ $isTerlambat ? 'mobile-card-terlambat' : '' }}" data-status="{{ $peminjaman->status }}">
                         <div class="mobile-card-header">
-                            <div class="avatar-user" style="background: {{ ['#667eea', '#11998e', '#f093fb', '#4facfe', '#f5576c', '#ffd93d'][$key % 6] }};">
+                            <div class="avatar-user" style="background: {{ ['#1e3a8a', '#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'][$key % 6] }};">
                                 {{ strtoupper(substr($peminjaman->user->name, 0, 1)) }}
                             </div>
                             <div>
                                 <div class="fw-bold" style="font-size: 0.95rem;">{{ $peminjaman->user->name }}</div>
-                                <small class="text-muted" style="font-size: 0.75rem;">
-                                    <i class="fas fa-school me-1"></i>{{ $peminjaman->user->kelas ?? '-' }} / {{ $peminjaman->user->nis ?? '-' }}
-                                </small>
+                                <small class="text-muted" style="font-size: 0.75rem;"><i class="fas fa-school me-1"></i>{{ $peminjaman->user->kelas ?? '-' }} / {{ $peminjaman->user->nis ?? '-' }}</small>
                             </div>
                             <div class="ms-auto text-end">
-                                @if($peminjaman->status == 'pending')
+                                @if($isTerlambat)
+                                    <span class="badge-status badge-terlambat">Terlambat!</span>
+                                @elseif($peminjaman->status == 'pending')
                                     <span class="badge-status badge-pending">Menunggu</span>
                                     @if($peminjaman->kode_pickup)
                                         <br><small class="text-primary fw-bold" style="font-size: 0.7rem;">{{ $peminjaman->kode_pickup }}</small>
@@ -310,8 +331,6 @@
                             <p><strong>Buku:</strong> {{ $peminjaman->buku->judul }}</p>
                             <p><strong>Tgl Pinjam:</strong> {{ $peminjaman->tanggal_pinjam->format('d/m/Y') }}</p>
                             <p><strong>Tgl Kembali:</strong> {{ $peminjaman->tanggal_kembali->format('d/m/Y') }}</p>
-                            
-                            @php $dendaSaatIni = $peminjaman->hitungDendaBerjalan(); @endphp
                             @if($dendaSaatIni > 0)
                                 <p class="text-danger mt-1 mb-0"><strong>Denda:</strong> Rp {{ number_format($dendaSaatIni, 0, ',', '.') }}</p>
                             @endif
@@ -319,12 +338,12 @@
 
                         <div class="mobile-card-actions">
                             @if($peminjaman->status == 'pending')
-                                @if(Auth::user()->role == 'admin')
+                                @if(!$isSiswa)
                                     <a href="{{ route('peminjaman.verifikasi', $peminjaman->id) }}" class="btn btn-success" onclick="return confirm('Verifikasi?')"><i class="fas fa-check"></i> Verifikasi</a>
                                     <a href="{{ route('peminjaman.tolak', $peminjaman->id) }}" class="btn btn-danger" onclick="return confirm('Tolak?')"><i class="fas fa-times"></i> Tolak</a>
                                 @endif
-                            @elseif($peminjaman->status == 'dipinjam' || $peminjaman->status == 'terlambat')
-                                @if(Auth::user()->role == 'admin')
+                            @elseif($peminjaman->status == 'dipinjam' || $peminjaman->status == 'terlambat' || $isTerlambat)
+                                @if(!$isSiswa)
                                     <a href="{{ route('peminjaman.kembali', $peminjaman->id) }}" class="btn btn-success" onclick="return confirm('Kembalikan?')"><i class="fas fa-undo"></i> Kembali</a>
                                     <a href="{{ route('peminjaman.edit', $peminjaman->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
                                     <form action="{{ route('peminjaman.destroy', $peminjaman->id) }}" method="POST" class="d-inline">

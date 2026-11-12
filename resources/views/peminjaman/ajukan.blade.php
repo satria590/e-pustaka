@@ -7,18 +7,18 @@
     /* Background Utama */
     .form-bg {
         position: relative;
-        background: #f0f4f8;
+        background: #f0fdf4; /* Latar hijau sangat lembut */
         min-height: 100vh;
         padding: 40px 0 60px 0;
     }
     
-    /* Ornamen Background Abstrak */
+    /* Ornamen Background Abstrak (Hijau) */
     .form-bg::before {
         content: '';
         position: absolute;
         top: -100px; right: -100px;
         width: 400px; height: 400px;
-        background: #c7d2fe;
+        background: #bbf7d0; /* Hijau muda */
         border-radius: 50%;
         opacity: 0.5;
         filter: blur(80px);
@@ -29,7 +29,7 @@
         position: absolute;
         bottom: -100px; left: -100px;
         width: 300px; height: 300px;
-        background: #fde68a;
+        background: #fef08a; /* Kuning muda */
         border-radius: 50%;
         opacity: 0.4;
         filter: blur(80px);
@@ -52,11 +52,11 @@
     }
 
     /* ========================================= */
-    /* SISI KIRI: INFO BUKU (CARD EKSKLUSIF)     */
+    /* SISI KIRI: INFO BUKU (TEMA HIJAU)         */
     /* ========================================= */
     .info-buku-side {
         flex: 0 0 40%;
-        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%); /* Hijau Navy */
         padding: 40px 30px;
         color: white;
         display: flex;
@@ -76,15 +76,26 @@
         transform: rotate(-15deg);
     }
 
-    .buku-icon-large {
-        width: 100px; height: 130px;
-        background: rgba(255,255,255,0.15);
-        border: 2px solid rgba(255,255,255,0.3);
+    /* Desain Cover Buku */
+    .cover-buku-wrapper {
+        width: 100%;
+        height: 280px;
         border-radius: 12px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 3rem;
+        overflow: hidden;
         margin-bottom: 25px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        position: relative;
+        z-index: 2;
+    }
+    .cover-buku-wrapper img {
+        width: 100%; height: 100%; object-fit: cover;
+    }
+    .cover-fallback {
+        width: 100%; height: 100%;
+        background: rgba(255,255,255,0.15);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 4rem; color: rgba(255,255,255,0.5);
+        border: 2px dashed rgba(255,255,255,0.3);
     }
 
     .info-buku-side h3 {
@@ -109,8 +120,8 @@
 
     .status-tersedia {
         display: inline-block;
-        background: #d4edda; color: #155724;
-        padding: 6px 15px; border-radius: 20px;
+        background: #d1fae5; color: #065f46;
+        padding: 8px 15px; border-radius: 20px;
         font-weight: 700; font-size: 0.85rem;
         margin-top: 20px;
         align-self: flex-start;
@@ -139,7 +150,7 @@
     }
 
     .form-label { font-weight: 600; font-size: 0.85rem; color: #334155; margin-bottom: 8px; }
-    .form-label i { color: #3b82f6; margin-right: 5px; }
+    .form-label i { color: #10b981; margin-right: 5px; } /* Ikon hijau */
 
     .form-control {
         border: 2px solid #e2e8f0;
@@ -150,8 +161,8 @@
         transition: all 0.3s ease;
     }
     .form-control:focus {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        border-color: #10b981; /* Fokus hijau */
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
         background: white;
     }
     
@@ -165,15 +176,15 @@
     }
 
     .btn-ajukan {
-        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%); /* Tombol hijau */
         color: white; border: none;
         border-radius: 12px; padding: 15px; font-weight: 700;
         width: 100%; font-size: 1rem; transition: all 0.3s ease;
-        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
     }
     .btn-ajukan:hover { 
         transform: translateY(-3px); 
-        box-shadow: 0 12px 25px rgba(59, 130, 246, 0.5);
+        box-shadow: 0 12px 25px rgba(16, 185, 129, 0.5);
         color: white;
     }
     
@@ -183,13 +194,13 @@
         width: 100%; font-size: 0.95rem; transition: all 0.3s ease;
         display: block; text-align: center; text-decoration: none; margin-top: 12px;
     }
-    .btn-batal:hover { background: #f1f5f9; color: #334155; border-color: #cbd5e1; }
+    .btn-batal:hover { background: #f0fdf4; color: #059669; border-color: #10b981; }
 
-    .form-check-input:checked { background-color: #3b82f6; border-color: #3b82f6; }
+    .form-check-input:checked { background-color: #10b981; border-color: #10b981; }
     .form-check-label { font-size: 0.85rem; color: #64748b; }
     .form-check-box {
-        background: #f8fafc;
-        border: 1px dashed #cbd5e1;
+        background: #f0fdf4;
+        border: 1px dashed #6ee7b7;
         border-radius: 12px;
         padding: 15px;
     }
@@ -206,10 +217,9 @@
             padding: 30px 20px;
             text-align: center;
         }
-        .buku-icon-large {
+        .cover-buku-wrapper {
+            width: 180px; height: 250px;
             margin: 0 auto 20px auto;
-            width: 80px; height: 100px;
-            font-size: 2.5rem;
         }
         .status-tersedia {
             align-self: center;
@@ -228,9 +238,18 @@
             <!-- SISI KIRI: INFO BUKU                      -->
             <!-- ========================================= -->
             <div class="info-buku-side">
-                <div class="buku-icon-large">
-                    <i class="fas fa-book"></i>
+                
+                <!-- Tampilkan Foto Cover atau Ikon Fallback -->
+                <div class="cover-buku-wrapper">
+                    @if($buku->foto)
+                        <img src="{{ $buku->foto }}" alt="{{ $buku->judul }}">
+                    @else
+                        <div class="cover-fallback">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    @endif
                 </div>
+
                 <h3>{{ $buku->judul }}</h3>
                 <div class="meta-info">
                     <i class="fas fa-pen-nib"></i> {{ $buku->pengarang }}
@@ -248,7 +267,7 @@
             <!-- SISI KANAN: FORMULIR                      -->
             <!-- ========================================= -->
             <div class="form-side">
-                <h4><i class="fas fa-file-signature me-2 text-primary"></i>Form Pengajuan</h4>
+                <h4><i class="fas fa-file-signature me-2 text-success"></i>Form Pengajuan</h4>
                 <p class="subtitle">Lengkapi data di bawah untuk meminjam buku ini.</p>
 
                 <form action="{{ route('peminjaman.store') }}" method="POST">

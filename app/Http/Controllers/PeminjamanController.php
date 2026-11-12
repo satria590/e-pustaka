@@ -9,12 +9,33 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str; // Untuk Generate Kode Pickup
+use Illuminate\Support\Str;
 
 class PeminjamanController extends Controller
 {
     public function index()
     {
+        // ==========================================
+        // LOGIKA BARU: Update Denda & Status Otomatis
+        // ==========================================
+        $peminjamansAktif = Peminjaman::whereIn('status', ['dipinjam', 'terlambat'])->get();
+
+        foreach ($peminjamansAktif as $pt) {
+            $hariIni = Carbon::now()->startOfDay();
+            $tglKembali = $pt->tanggal_kembali->startOfDay();
+
+            if ($hariIni->gt($tglKembali)) {
+                $hariTelat = $hariIni->diffInDays($tglKembali);
+                $denda = abs($hariTelat) * 2000;
+                
+                $pt->update([
+                    'status' => 'terlambat',
+                    'denda' => $denda
+                ]);
+            }
+        }
+        // ==========================================
+
         if (Auth::user()->role == 'admin') {
             $peminjamans = Peminjaman::with(['user', 'buku'])->latest()->paginate(10);
         } else {
@@ -79,24 +100,20 @@ class PeminjamanController extends Controller
             }
 
             if ($isPengajuanSiswa) {
-                // BUAT KODE PICKUP OTOMATIS
                 $kodePickup = 'PKP-' . strtoupper(Str::random(5));
-
                 Peminjaman::create([
                     'user_id' => Auth::id(),
                     'buku_id' => $request->buku_id,
                     'tanggal_pinjam' => $request->tanggal_pinjam,
                     'tanggal_kembali' => $request->tanggal_kembali,
                     'status' => 'pending',
-                    'kode_pickup' => $kodePickup, // <-- Simpan Kode
+                    'kode_pickup' => $kodePickup,
                     'catatan' => $request->catatan,
                     'denda' => 0,
                 ]);
-                
                 $pesan = 'Pengajuan berhasil! Tunjukkan Kode Pickup ' . $kodePickup . ' ke Admin saat mengambil buku.';
                 $redirect = redirect()->route('peminjaman.index')->with('success', $pesan);
             } else {
-                // Admin Offline
                 $buku->decrement('stok');
                 Peminjaman::create([
                     'user_id' => $request->user_id,
@@ -177,20 +194,27 @@ class PeminjamanController extends Controller
 
         $peminjaman = Peminjaman::findOrFail($id);
         
-        if ($peminjaman->status == 'dikembalikan' || $peminjaman->status == 'terlambat') {
+        // Blokir jika sudah dikembalikan
+        if ($peminjaman->status == 'dikembalikan') {
             return back()->with('error', 'Buku ini sudah dikembalikan sebelumnya.');
         }
 
         $tanggalKembali = Carbon::now();
         $peminjaman->tanggal_pengembalian_aktual = $tanggalKembali;
 
-        if ($tanggalKembali->gt($peminjaman->tanggal_kembali)) {
-            $hariTelat = $tanggalKembali->diffInDays($peminjaman->tanggal_kembali);
-            $peminjaman->denda = $hariTelat * 2000;
-            $peminjaman->status = 'terlambat';
+        // Hitung denda jika telat
+        if ($tanggalKembali->startOfDay()->gt($peminjaman->tanggal_kembali->startOfDay())) {
+            $hariTelat = $tanggalKembali->startOfDay()->diffInDays($peminjaman->tanggal_kembali->startOfDay());
+            $peminjaman->denda = abs($hariTelat) * 2000;
         } else {
-            $peminjaman->status = 'dikembalikan';
+            $peminjaman->denda = 0;
         }
+
+        // ==========================================
+        // PERBAIKAN: Apapun statusnya, setelah dikembalikan
+        // Statusnya harus berubah menjadi 'dikembalikan'
+        // ==========================================
+        $peminjaman->status = 'dikembalikan'; 
 
         $peminjaman->buku->increment('stok');
         $peminjaman->save();

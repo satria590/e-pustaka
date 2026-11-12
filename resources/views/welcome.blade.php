@@ -5,36 +5,37 @@
 @section('content')
 <style>
     /* =========================================
-       HERO SECTION (Layar Penuh Pertama)
+       HERO SECTION
        ========================================= */
     .hero-section {
         position: relative;
         background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
         background-size: cover;
         background-position: center;
-        height: 85vh; /* Hampir setinggi layar */
-        min-height: 500px;
+        background-attachment: fixed;
+        height: 50vh;
+        min-height: 400px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
         color: white;
-        margin-top: -24px; /* Menarik ke atas agar menempel navbar */
+        margin-top: -24px;
     }
 
     .hero-overlay {
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 58, 138, 0.7) 100%);
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.85) 100%);
         z-index: 1;
     }
 
     .hero-content {
         position: relative;
         z-index: 2;
-        max-width: 800px;
+        max-width: 900px;
         padding: 0 20px;
-        animation: slideUp 1s ease-out;
+        animation: slideUp 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     @keyframes slideUp {
@@ -44,29 +45,37 @@
 
     .hero-content h1 {
         font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 20px;
-        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        line-height: 1.2;
+        font-weight: 900;
+        margin-bottom: 15px;
+        line-height: 1.1;
+        letter-spacing: -1px;
+    }
+
+    .text-gradient {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .hero-content p {
-        font-size: 1.2rem;
-        margin-bottom: 40px;
+        font-size: 1rem;
+        margin-bottom: 30px;
         opacity: 0.9;
-        font-weight: 400;
+        font-weight: 300;
+        line-height: 1.6;
     }
 
     .btn-hero {
-        background: #fbbf24; /* Kuning cerah */
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
         color: #1e3a8a;
-        font-weight: 700;
-        font-size: 1.1rem;
-        padding: 15px 40px;
+        font-weight: 800;
+        font-size: 1rem;
+        padding: 12px 30px;
         border-radius: 50px;
         text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
         display: inline-flex;
         align-items: center;
         gap: 10px;
@@ -74,117 +83,193 @@
     }
 
     .btn-hero:hover {
-        background: #f59e0b;
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 12px 25px rgba(251, 191, 36, 0.6);
         color: #1e3a8a;
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(251, 191, 36, 0.6);
     }
 
     /* =========================================
-       SECTION FITUR / KEUNGGULAN
+       SECTION FITUR
        ========================================= */
     .features-section {
-        padding: 80px 0;
+        padding: 60px 0;
         background: white;
         position: relative;
         z-index: 3;
+        margin-top: -30px;
+        border-radius: 30px 30px 0 0;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
     }
 
     .feature-card {
         text-align: center;
-        padding: 30px 20px;
+        padding: 25px 15px;
         border-radius: 20px;
-        background: #f8fafc;
-        transition: all 0.3s ease;
+        background: white;
+        transition: all 0.4s ease;
         height: 100%;
         border: 1px solid #e2e8f0;
     }
 
     .feature-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-        background: white;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
         border-color: #3b82f6;
     }
 
-    .feature-icon {
-        width: 80px;
-        height: 80px;
+    .feature-icon-wrapper {
+        width: 70px; height: 70px;
         background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        color: white;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        margin: 0 auto 20px;
+        color: white; border-radius: 18px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.8rem; margin: 0 auto 15px;
         box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
     }
 
-    .feature-card h5 { font-weight: 700; color: #1e293b; margin-bottom: 10px; }
-    .feature-card p { color: #64748b; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+    .feature-card h5 { font-weight: 800; color: #1e293b; margin-bottom: 8px; font-size: 1rem; }
+    .feature-card p { color: #64748b; font-size: 0.85rem; line-height: 1.6; margin: 0; }
 
     /* =========================================
-       KATALOG PREVIEW (Bawah)
+       KATALOG PREVIEW
        ========================================= */
     .katalog-preview {
-        padding: 80px 0;
+        padding: 50px 0 80px;
         background: #f0f4f8;
     }
 
     .section-title {
         text-align: center;
-        margin-bottom: 50px;
+        margin-bottom: 40px;
     }
 
-    .section-title h2 { font-weight: 800; color: #1e3a8a; font-size: 2.2rem; margin-bottom: 10px; }
-    .section-title p { color: #64748b; font-size: 1.1rem; }
-
-    /* Card Buku (Copy dari index) */
-    .card-buku {
-        border: none; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-        transition: all 0.4s ease; background: white; height: 100%;
-        display: flex; flex-direction: column; overflow: hidden; position: relative;
-        border-left: 6px solid #cbd5e1;
+    .section-title h2 { 
+        font-weight: 900; color: #1e3a8a; font-size: 2.2rem; margin-bottom: 10px; 
     }
-    .card-buku:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-    
-    .bg-kategori-teknologi { background: #e0e7ff; color: #3730a3; border-left-color: #6366f1; }
-    .bg-kategori-sains { background: #d1fae5; color: #065f46; border-left-color: #10b981; }
-    .bg-kategori-fiksi { background: #fce7f3; color: #9d174d; border-left-color: #ec4899; }
-    .bg-kategori-sejarah { background: #fef3c7; color: #92400e; border-left-color: #f59e0b; }
-    .bg-kategori-lainnya { background: #f3e8ff; color: #6b21a8; border-left-color: #a855f7; }
+    .section-title p { color: #64748b; font-size: 0.95rem; }
 
-    .card-buku .card-header-buku { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-    .card-buku .kategori-badge { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; }
-    .card-buku .book-icon { font-size: 1.8rem; opacity: 0.3; transition: all 0.3s ease; }
-    .card-buku:hover .book-icon { transform: scale(1.2) rotate(10deg); opacity: 0.6; }
+    .card-buku-preview {
+        border: none; border-radius: 16px; 
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        transition: all 0.4s ease; 
+        background: white; height: 100%;
+        display: flex; flex-direction: column; overflow: hidden;
+        border: 1px solid #e2e8f0;
+    }
+    .card-buku-preview:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
     
-    .card-buku .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-    .card-buku .judul { font-weight: 800; font-size: 1.15rem; margin-bottom: 5px; color: #1e293b; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .card-buku .pengarang { color: #64748b; font-size: 0.85rem; margin-bottom: 15px; display: flex; align-items: center; gap: 6px; font-weight: 500; font-style: italic; }
-    .card-buku .sinopsis { font-size: 0.85rem; color: #64748b; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.6; flex-grow: 1; }
-    
-    .card-buku .card-footer { background: #f8fafc; border-top: 1px dashed #e2e8f0; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .btn-action { border-radius: 8px; padding: 7px 15px; font-size: 0.8rem; font-weight: 700; transition: all 0.3s ease; }
-    .stok-badge { padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; }
+    .cover-preview {
+        height: 250px; position: relative; overflow: hidden;
+        background: #f1f5f9; display: flex; justify-content: center; align-items: center;
+        padding: 15px;
+    }
+    .cover-preview img {
+        height: 100%; width: auto; max-width: 100%; object-fit: cover;
+        border-radius: 8px; box-shadow: 5px 5px 15px rgba(0,0,0,0.25);
+        transition: transform 0.4s ease;
+        transform: perspective(800px) rotateY(-5deg);
+    }
+    .card-buku-preview:hover .cover-preview img { transform: perspective(800px) rotateY(0deg) scale(1.05); }
 
+    .cover-fallback {
+        width: 140px; height: 200px;
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 8px; box-shadow: 5px 5px 15px rgba(0,0,0,0.25);
+        transform: perspective(800px) rotateY(-5deg); transition: transform 0.4s ease;
+    }
+    .cover-fallback i { font-size: 3rem; color: white; opacity: 0.3; }
+    .card-buku-preview:hover .cover-fallback { transform: perspective(800px) rotateY(0deg) scale(1.05); }
+
+    .badge-kategori-preview {
+        position: absolute; top: 15px; left: 15px;
+        background: rgba(255,255,255,0.95); color: #1e293b;
+        font-weight: 700; font-size: 0.7rem; padding: 5px 12px;
+        border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        z-index: 2;
+    }
+
+    .card-body-preview { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+    .judul-preview { font-weight: 800; font-size: 1rem; margin-bottom: 6px; color: #1e293b; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .pengarang-preview { color: #64748b; font-size: 0.8rem; margin-bottom: 15px; display: flex; align-items: center; gap: 6px; }
+    .sinopsis-preview { font-size: 0.8rem; color: #64748b; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5; flex-grow: 1; }
+    
+    .footer-preview { 
+        background: #f8fafc; border-top: 1px solid #f1f5f9; 
+        padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; 
+    }
+
+    /* =========================================
+       BANNER AJAKAN (CTA)
+       ========================================= */
+    .cta-section {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        padding: 50px 20px;
+        text-align: center;
+        color: white;
+        border-radius: 30px;
+        margin: 0 5% 50px 5%;
+        box-shadow: 0 15px 30px rgba(30, 58, 138, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    .cta-section::before {
+        content: '📚'; position: absolute; left: -20px; top: -20px; font-size: 150px; opacity: 0.1; transform: rotate(-15deg);
+    }
+    .cta-section h2 { font-weight: 800; font-size: 2rem; margin-bottom: 15px; position: relative; z-index: 2; }
+    .cta-section p { font-size: 1rem; opacity: 0.9; margin-bottom: 25px; position: relative; z-index: 2; }
+
+    /* =========================================
+       FOOTER KHUSUS LANDING PAGE
+       ========================================= */
+    .footer-landing {
+        background: #0f172a; color: #94a3b8; padding: 30px 0; text-align: center;
+    }
+    .footer-landing p { margin: 0; font-size: 0.9rem; }
+
+    /* =========================================
+       RESPONSIVE (TAMPILAN HP)
+       ========================================= */
     @media (max-width: 768px) {
-        .hero-content h1 { font-size: 2.2rem; }
-        .hero-section { height: auto; padding: 100px 0; }
+        /* Hero Section di HP */
+        .hero-section { 
+            height: 50vh; 
+            min-height: 350px; 
+            padding: 30px 0; 
+        }
+        .hero-content h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .hero-content p { font-size: 0.9rem; margin-bottom: 25px; }
+        .btn-hero { font-size: 0.9rem; padding: 10px 25px; }
+        
+        /* Fitur Section di HP */
+        .features-section { 
+            margin-top: -20px; 
+            border-radius: 20px 20px 0 0; 
+            padding: 40px 0; 
+        }
+        .feature-card { padding: 20px 15px; }
+        .feature-icon-wrapper { width: 60px; height: 60px; font-size: 1.5rem; margin-bottom: 12px; }
+        .feature-card h5 { font-size: 0.95rem; }
+        .feature-card p { font-size: 0.8rem; }
+        
+        /* Katalog di HP */
+        .section-title h2 { font-size: 1.8rem; }
+        .cover-preview { height: 220px; }
+        
+        /* CTA di HP */
+        .cta-section h2 { font-size: 1.5rem; }
+        .cta-section { margin: 0 15px 40px 15px; padding: 40px 15px; }
     }
 </style>
 
 <!-- =========================================
-     1. HERO SECTION (Layar Pertama)
+     1. HERO SECTION
      ========================================= -->
 <section class="hero-section">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <h1>Jelajahi Dunia Lewat Membaca</h1>
-        <p>Sistem Informasi Perpustakaan Digital SMK Negeri 5. Temukan ribuan koleksi buku, pinjam dengan mudah, dan kelola riwayat bacaanmu dalam satu genggaman.</p>
+        <h1>Jelajahi Dunia<br>Lewat <span class="text-gradient">Membaca</span></h1>
+        <p>Sistem Informasi Perpustakaan Digital SMK Negeri 5. Temukan ribuan koleksi buku, pinjam dengan mudah, dan kelola riwayat bacaanmu.</p>
         
-        <!-- Tombol yang mengarah ke ID #katalog -->
         <a href="#katalog" class="btn-hero">
             <i class="fas fa-book-open"></i> Lihat Koleksi Buku
         </a>
@@ -192,30 +277,30 @@
 </section>
 
 <!-- =========================================
-     2. FITUR SECTION (Keunggulan)
+     2. FITUR SECTION
      ========================================= -->
 <section class="features-section">
     <div class="container">
         <div class="row g-4 justify-content-center">
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-search"></i></div>
+                    <div class="feature-icon-wrapper"><i class="fas fa-search"></i></div>
                     <h5>Pencarian Cepat</h5>
-                    <p>Temukan buku berdasarkan judul, pengarang, atau kategori dengan mesin pencari yang canggih.</p>
+                    <p>Temukan buku berdasarkan judul, pengarang, atau kategori dengan mesin pencari.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="feature-icon-wrapper"><i class="fas fa-mobile-alt"></i></div>
                     <h5>Peminjaman Online</h5>
-                    <p>Ajukan peminjaman buku langsung dari smartphone kamu tanpa harus antre di depan rak.</p>
+                    <p>Ajukan peminjaman buku langsung dari smartphone tanpa harus antre di rak.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-history"></i></div>
+                    <div class="feature-icon-wrapper"><i class="fas fa-history"></i></div>
                     <h5>Riwayat Terpantau</h5>
-                    <p>Pantau tanggal pengembalian dan riwayat bacaanmu agar terhindar dari denda keterlambatan.</p>
+                    <p>Pantau tanggal pengembalian dan riwayat bacaanmu agar terhindar dari denda.</p>
                 </div>
             </div>
         </div>
@@ -223,52 +308,51 @@
 </section>
 
 <!-- =========================================
-     3. KATALOG PREVIEW (Target Scroll)
+     3. KATALOG PREVIEW
      ========================================= -->
 <section id="katalog" class="katalog-preview">
     <div class="container">
         <div class="section-title">
-            <h2>Koleksi Terbaru Kami</h2>
+            <h2>Koleksi Terbaru</h2>
             <p>Beberapa buku yang baru saja ditambahkan ke perpustakaan</p>
         </div>
 
         <div class="row g-4">
             @forelse($bukus as $buku)
             <div class="col-xl-3 col-lg-4 col-md-6">
-                
-                @php
-                    $kat = strtolower($buku->kategori);
-                    $bgClass = 'bg-kategori-lainnya';
-                    $iconClass = 'fa-book';
-                    if ($kat == 'teknologi') { $bgClass = 'bg-kategori-teknologi'; $iconClass = 'fa-laptop-code'; } 
-                    elseif ($kat == 'sains') { $bgClass = 'bg-kategori-sains'; $iconClass = 'fa-flask'; } 
-                    elseif ($kat == 'fiksi') { $bgClass = 'bg-kategori-fiksi'; $iconClass = 'fa-hat-wizard'; } 
-                    elseif ($kat == 'sejarah') { $bgClass = 'bg-kategori-sejarah'; $iconClass = 'fa-landmark'; }
-                @endphp
-
-                <div class="card-buku {{ $bgClass }}">
-                    <div class="card-header-buku">
-                        <div class="kategori-badge"><i class="fas {{ $iconClass }}"></i> {{ $buku->kategori }}</div>
-                        <i class="book-icon fas {{ $iconClass }}"></i>
+                <div class="card-buku-preview">
+                    <div class="cover-preview">
+                        @if($buku->foto)
+                            <img src="{{ $buku->foto }}" alt="{{ $buku->judul }}">
+                        @else
+                            <div class="cover-fallback"><i class="fas fa-book"></i></div>
+                        @endif
+                        <span class="badge-kategori-preview">
+                            <i class="fas fa-tag me-1 text-primary"></i>{{ $buku->kategori }}
+                        </span>
                     </div>
                     
-                    <div class="card-body">
-                        <div class="judul">{{ $buku->judul }}</div>
-                        <div class="pengarang"><i class="fas fa-pen-nib"></i> {{ $buku->pengarang }}</div>
-                        <div class="mt-1 mb-3">
-                            <span class="stok-badge bg-{{ $buku->stok > 0 ? 'success' : 'danger' }} text-white">Stok: {{ $buku->stok }}</span>
+                    <div class="card-body-preview">
+                        <div class="judul-preview">{{ $buku->judul }}</div>
+                        <div class="pengarang-preview"><i class="fas fa-pen-nib text-primary"></i> {{ $buku->pengarang }}</div>
+                        
+                        <div class="mb-2">
+                            <span class="badge bg-{{ $buku->stok > 0 ? 'success' : 'danger' }} text-white" style="padding: 4px 12px; border-radius: 20px; font-size: 0.7rem;">
+                                <i class="fas fa-{{ $buku->stok > 0 ? 'check-circle' : 'times-circle' }} me-1"></i> Stok: {{ $buku->stok }}
+                            </span>
                         </div>
-                        <p class="sinopsis">{{ $buku->sinopsis ?? 'Belum ada sinopsis.' }}</p>
+                        
+                        <p class="sinopsis-preview">{{ $buku->sinopsis ?? 'Belum ada sinopsis.' }}</p>
                     </div>
 
-                    <div class="card-footer">
-                        <a href="{{ Auth::check() ? route('buku.show', $buku->id) : route('katalog.show', $buku->id) }}" class="btn btn-sm btn-outline-primary btn-action">
+                    <div class="footer-preview">
+                        <a href="{{ Auth::check() ? route('buku.show', $buku->id) : route('katalog.show', $buku->id) }}" class="btn btn-sm btn-outline-primary" style="border-radius: 8px; font-weight: 600; font-size: 0.75rem; padding: 5px 10px;">
                             <i class="fas fa-eye"></i> Detail
                         </a>
                         
                         @auth
                             @if(Auth::user()->role == 'siswa' && $buku->stok > 0)
-                                <a href="{{ route('peminjaman.form_ajukan', $buku->id) }}" class="btn btn-sm btn-primary btn-action" style="background: #1e3a8a; border-color: #1e3a8a;">
+                                <a href="{{ route('peminjaman.form_ajukan', $buku->id) }}" class="btn btn-sm btn-primary" style="border-radius: 8px; font-weight: 600; background: #1e3a8a; border-color: #1e3a8a; font-size: 0.75rem; padding: 5px 10px;">
                                     <i class="fas fa-hand-holding"></i> Pinjam
                                 </a>
                             @endif
@@ -276,7 +360,7 @@
 
                         @guest
                             @if($buku->stok > 0)
-                                <a href="{{ route('login') }}" class="btn btn-sm btn-primary btn-action" style="background: #1e3a8a; border-color: #1e3a8a;" onclick="return confirm('Silakan login terlebih dahulu untuk meminjam buku ini.')">
+                                <a href="{{ route('login') }}" class="btn btn-sm btn-primary" style="border-radius: 8px; font-weight: 600; background: #1e3a8a; border-color: #1e3a8a; font-size: 0.75rem; padding: 5px 10px;" onclick="return confirm('Silakan login terlebih dahulu untuk meminjam buku ini.')">
                                     <i class="fas fa-hand-holding"></i> Pinjam
                                 </a>
                             @endif
@@ -299,4 +383,30 @@
         </div>
     </div>
 </section>
+
+<!-- =========================================
+     4. BANNER AJAKAN (CTA)
+     ========================================= -->
+<section class="cta-section">
+    <h2>Mulai Petualangan Membacamu Hari Ini!</h2>
+    <p>Bergabunglah bersama ratusan siswa lainnya. Pinjam buku favoritmu sekarang juga.</p>
+    @guest
+        <a href="{{ route('register') }}" class="btn btn-light text-primary fw-bold px-4 py-2" style="border-radius: 50px;">
+            <i class="fas fa-user-plus me-2"></i> Daftar Anggota Sekarang
+        </a>
+    @endguest
+    @auth
+        <a href="{{ route('buku.index') }}" class="btn btn-light text-primary fw-bold px-4 py-2" style="border-radius: 50px;">
+            <i class="fas fa-book-open me-2"></i> Mulai Cari Buku
+        </a>
+    @endauth
+</section>
+
+<!-- =========================================
+     5. FOOTER LANDING PAGE
+     ========================================= -->
+<div class="footer-landing">
+    <p>&copy; {{ date('Y') }} e-Pustaka SMK Negeri 5. Dibuat dengan <i class="fas fa-heart text-danger"></i> oleh Satria Rahmansyah.</p>
+</div>
+
 @endsection

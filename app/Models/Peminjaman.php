@@ -21,7 +21,7 @@ class Peminjaman extends Model
         'status', 
         'denda',
         'catatan',
-        'kode_pickup' // <-- TAMBAHAN
+        'kode_pickup'
     ];
 
     protected $casts = [
@@ -45,19 +45,29 @@ class Peminjaman extends Model
         if (in_array($this->status, ['dikembalikan', 'ditolak', 'pending'])) {
             return false;
         }
-        return Carbon::now()->gt($this->tanggal_kembali);
+        return Carbon::now()->startOfDay()->gt($this->tanggal_kembali->startOfDay());
     }
 
+    // FUNGSI PERBAIKAN: Hitung denda berjalan
     public function hitungDendaBerjalan()
     {
-        if (in_array($this->status, ['dikembalikan', 'terlambat', 'ditolak', 'pending'])) {
+        // Jika sudah dikembalikan atau ditolak, pakai denda yang tersimpan
+        if (in_array($this->status, ['dikembalikan', 'ditolak'])) {
             return $this->denda;
         }
 
-        $hariIni = Carbon::now();
-        if ($hariIni->gt($this->tanggal_kembali)) {
-            $hariTelat = $hariIni->diffInDays($this->tanggal_kembali);
-            return $hariTelat * 2000;
+        // Jika status pending, belum ada denda
+        if ($this->status == 'pending') {
+            return 0;
+        }
+
+        // Hitung selisih hari
+        $hariIni = Carbon::now()->startOfDay();
+        $tglKembali = $this->tanggal_kembali->startOfDay();
+
+        if ($hariIni->gt($tglKembali)) {
+            $hariTelat = $hariIni->diffInDays($tglKembali);
+            return abs($hariTelat) * 2000; // Rp 2.000/hari
         }
 
         return 0;

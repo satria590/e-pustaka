@@ -21,207 +21,122 @@
 
     /* Breadcrumb */
     .breadcrumb-custom {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.9rem;
-        margin-bottom: 20px;
-        position: relative;
-        z-index: 1;
+        display: flex; align-items: center; gap: 8px;
+        font-size: 0.9rem; margin-bottom: 20px; position: relative; z-index: 1;
     }
-    .breadcrumb-custom a {
-        color: #1e3a8a;
-        text-decoration: none;
-        font-weight: 600;
-        transition: color 0.2s;
-    }
+    .breadcrumb-custom a { color: #1e3a8a; text-decoration: none; font-weight: 600; transition: color 0.2s; }
     .breadcrumb-custom a:hover { color: #3b82f6; text-decoration: underline; }
     .breadcrumb-custom .separator { color: #94a3b8; }
     .breadcrumb-custom .current { color: #64748b; }
 
     /* Card Detail */
     .card-detail {
-        border: none;
-        border-radius: 20px;
+        border: none; border-radius: 20px;
         box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-        background: white;
-        overflow: hidden;
-        position: relative;
-        z-index: 1;
+        background: white; overflow: hidden;
+        position: relative; z-index: 1;
     }
 
     /* Bagian Atas (Cover & Info Utama) */
     .book-cover-section {
-        background: #f8fafc;
-        padding: 40px;
-        display: flex;
-        gap: 40px;
+        background: #f8fafc; padding: 40px;
+        display: flex; gap: 40px;
         align-items: flex-start;
         border-bottom: 1px solid #e2e8f0;
     }
 
     /* Desain Cover Buku */
     .book-cover-img {
-        width: 250px;
-        height: 350px;
-        object-fit: cover;
-        border-radius: 12px;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        flex-shrink: 0;
-        transition: transform 0.3s ease;
+        width: 250px; height: 350px; object-fit: cover;
+        border-radius: 12px; box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        flex-shrink: 0; transition: all 0.4s ease;
     }
-    .book-cover-img:hover {
-        transform: translateY(-5px) scale(1.02);
-    }
+    .book-cover-img:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
 
     /* Desain Jika Tidak Ada Foto (Fallback) */
     .book-cover-fallback {
-        width: 250px;
-        height: 350px;
+        width: 250px; height: 350px;
         background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 15px 30px rgba(30, 58, 138, 0.3);
-        flex-shrink: 0;
+        border-radius: 12px; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 15px 30px rgba(30, 58, 138, 0.3); flex-shrink: 0;
     }
-    .book-cover-fallback i {
-        font-size: 6rem;
-        color: white;
-        opacity: 0.5;
-    }
+    .book-cover-fallback i { font-size: 6rem; color: white; opacity: 0.5; }
 
     /* Info Buku di Samping Cover */
-    .book-info-main {
-        flex-grow: 1;
-    }
-    .book-info-main h1 {
-        font-size: 2.2rem;
-        font-weight: 800;
-        color: #1e293b;
-        line-height: 1.3;
-        margin-bottom: 15px;
-    }
+    .book-info-main { flex-grow: 1; }
+    .book-info-main h1 { font-size: 2.2rem; font-weight: 800; color: #1e293b; line-height: 1.3; margin-bottom: 15px; }
+    
     .book-meta {
-        font-size: 1rem;
-        color: #64748b;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        font-size: 1rem; color: #64748b; margin-bottom: 10px;
+        display: flex; align-items: center; gap: 10px;
     }
     .book-meta i { width: 20px; color: #3b82f6; }
 
     .badge-kategori {
-        display: inline-block;
-        background: #e0e7ff;
-        color: #3730a3;
-        padding: 8px 18px;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 0.85rem;
-        margin-top: 15px;
-        margin-right: 10px;
+        display: inline-block; background: #e0e7ff; color: #3730a3;
+        padding: 8px 18px; border-radius: 20px;
+        font-weight: 700; font-size: 0.85rem; margin-top: 15px; margin-right: 10px;
     }
 
     .badge-stok {
-        display: inline-block;
-        padding: 8px 18px;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 0.85rem;
-        margin-top: 15px;
+        display: inline-block; padding: 8px 18px;
+        border-radius: 20px; font-weight: 700; font-size: 0.85rem; margin-top: 15px;
     }
     .stok-tersedia { background: #d1fae5; color: #065f46; }
     .stok-habis { background: #fee2e2; color: #991b1b; }
+
+    /* Kotak Lokasi Rak */
+    .rak-box {
+        background: #fffbeb; border: 1px solid #fcd34d;
+        border-left: 5px solid #f59e0b; border-radius: 12px;
+        padding: 15px 20px; margin-top: 20px;
+    }
+    .rak-box h6 { color: #b45309; font-weight: 800; margin-bottom: 5px; }
+    .rak-box p { color: #78350f; margin: 0; font-size: 0.95rem; }
 
     /* Bagian Bawah (Sinopsis & Tombol) */
     .detail-body { padding: 40px; }
 
     .section-title {
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        font-weight: 800;
-        color: #1e3a8a;
-        letter-spacing: 1px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        font-size: 0.85rem; text-transform: uppercase; font-weight: 800;
+        color: #1e3a8a; letter-spacing: 1px; margin-bottom: 20px;
+        display: flex; align-items: center; gap: 10px;
     }
     .section-title::after {
-        content: '';
-        flex: 1;
-        height: 2px;
-        background: linear-gradient(90deg, #3b82f6, transparent);
-        border-radius: 2px;
+        content: ''; flex: 1; height: 2px;
+        background: linear-gradient(90deg, #3b82f6, transparent); border-radius: 2px;
     }
 
     .sinopsis-box {
-        background: #f8fafc;
-        padding: 25px;
-        border-radius: 12px;
-        font-size: 1rem;
-        line-height: 1.8;
-        color: #475569;
-        border-left: 4px solid #3b82f6;
-        margin-bottom: 30px;
+        background: #f8fafc; padding: 25px; border-radius: 12px;
+        font-size: 1rem; line-height: 1.8; color: #475569;
+        border-left: 4px solid #3b82f6; margin-bottom: 30px;
     }
-    .sinopsis-box.empty {
-        font-style: italic;
-        color: #94a3b8;
-        text-align: center;
-    }
+    .sinopsis-box.empty { font-style: italic; color: #94a3b8; text-align: center; }
 
     /* Tombol Aksi */
     .action-buttons {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        padding-top: 20px;
-        border-top: 1px solid #e2e8f0;
+        display: flex; gap: 10px; flex-wrap: wrap;
+        padding-top: 20px; border-top: 1px solid #e2e8f0;
     }
 
     .btn-action-lg {
-        padding: 12px 28px;
-        border-radius: 10px;
-        font-weight: 700;
-        font-size: 0.95rem;
+        padding: 12px 28px; border-radius: 10px;
+        font-weight: 700; font-size: 0.95rem;
         transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border: none;
+        display: inline-flex; align-items: center; gap: 8px; border: none;
     }
-    .btn-action-lg:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
+    .btn-action-lg:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
 
     .btn-back-detail {
-        background: white;
-        color: #475569;
-        border: 2px solid #e2e8f0;
+        background: white; color: #475569; border: 2px solid #e2e8f0;
     }
-    .btn-back-detail:hover {
-        background: #f1f5f9;
-        color: #1e293b;
-    }
+    .btn-back-detail:hover { background: #f1f5f9; color: #1e293b; }
 
     /* Responsive */
     @media (max-width: 768px) {
-        .book-cover-section {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 30px 20px;
-        }
-        .book-cover-img, .book-cover-fallback {
-            width: 200px;
-            height: 280px;
-            margin-bottom: 20px;
-        }
+        .book-cover-section { flex-direction: column; align-items: center; text-align: center; padding: 30px 20px; }
+        .book-cover-img, .book-cover-fallback { width: 200px; height: 280px; margin-bottom: 20px; }
         .book-info-main h1 { font-size: 1.6rem; }
         .book-meta { justify-content: center; }
         .detail-body { padding: 30px 20px; }
@@ -289,9 +204,9 @@
 
                             {{-- TAMBAHAN: LOKASI RAK --}}
                             @if($buku->lokasi_rak)
-                            <div class="mt-4 p-3 rounded" style="background: #fef3c7; border-left: 4px solid #f59e0b;">
-                                <h6 class="mb-1 fw-bold text-warning"><i class="fas fa-map-marker-alt me-1"></i>Lokasi Buku</h6>
-                                <p class="mb-0 text-dark">Silakan ambil buku ini di: <strong>{{ $buku->lokasi_rak }}</strong></p>
+                            <div class="rak-box">
+                                <h6><i class="fas fa-map-marker-alt me-1"></i>Lokasi Pengambilan</h6>
+                                <p>Silakan ambil buku ini di: <strong>{{ $buku->lokasi_rak }}</strong></p>
                             </div>
                             @endif
                         </div>
@@ -325,7 +240,7 @@
                             @if($buku->stok > 0)
                                 @auth
                                     @if(Auth::user()->role == 'siswa')
-                                        <a href="{{ route('peminjaman.form_ajukan', $buku->id) }}" class="btn-action-lg" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
+                                        <a href="{{ route('peminjaman.form_ajukan', $buku->id) }}" class="btn-action-lg" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);">
                                             <i class="fas fa-hand-holding"></i>Pinjam Buku Ini
                                         </a>
                                     @endif
@@ -334,7 +249,7 @@
                                 @guest
                                     <a href="{{ route('login') }}" 
                                        class="btn-action-lg"
-                                       style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;"
+                                       style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);"
                                        onclick="return confirm('Silakan login terlebih dahulu untuk meminjam buku ini.')">
                                         <i class="fas fa-hand-holding"></i>Pinjam Buku Ini
                                     </a>
